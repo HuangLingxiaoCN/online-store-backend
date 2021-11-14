@@ -20,7 +20,7 @@ app.use(lusca.xframe('SAMEORIGIN'))
 app.use(lusca.xssProtection(true))
 
 // Use movie router
-app.use('/api/v1/movies', movieRouter)
+app.use('/movie/movies', movieRouter)
 
 // Custom API error handler
 app.use(apiErrorHandler)
