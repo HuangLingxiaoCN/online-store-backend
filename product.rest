@@ -1,0 +1,53 @@
+###
+POST http://localhost:8080/product/products
+content-type: application/json
+
+{
+  "name": "laptop",
+  "price": "1000",
+  "genre": "electronic",
+  "numberInStock": 20
+}
+
+###
+POST http://localhost:8080/product/products
+content-type: application/json
+
+{
+  "name": "router",
+  "price": "50",
+  "genre": "electronic",
+  "numberInStock": 50
+}
+
+###
+POST http://localhost:8080/product/products
+Content-Type: application/json
+
+{
+  "name": "desktop",
+  "price": "2000",
+  "genre": "electronic",
+  "numberInStock": 15
+}
+
+
+###
+GET http://localhost:8080/product/products
+
+###
+GET http://localhost:8080/product/products/619aa7a2f813075a4822a9a2
+
+###
+PUT http://localhost:8080/product/products/619a9b7a26bb485578bd865e
+Content-Type: application/json
+
+{
+  "name": "mobile phone",
+  "price": "1000",
+  "genre": "electronic",
+  "numberInStock": 40
+}
+
+###
+DELETE  http://localhost:8080/product/products/619aa93420556c23b4c74105

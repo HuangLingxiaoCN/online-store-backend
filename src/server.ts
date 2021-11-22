@@ -1,10 +1,9 @@
-import errorHandler from 'errorhandler'
 import mongoose from 'mongoose'
 
 import app from './app'
-import { MONGODB_URI } from './util/secrets'
+// import { MONGODB_URI } from './util/secrets'
 
-const mongoUrl = MONGODB_URI
+const mongoUrl = 'mongodb://localhost:27017/product'
 
 mongoose
   .connect(mongoUrl, {
@@ -14,7 +13,6 @@ mongoose
     useCreateIndex: true,
   })
   .then(() => {
-    // Start Express server
     app.listen(app.get('port'), () => {
       console.log(
         '  App is running at http://localhost:%d in %s mode',
@@ -24,13 +22,4 @@ mongoose
       console.log('  Press CTRL-C to stop\n')
     })
   })
-  .catch((err: Error) => {
-    console.log(
-      'MongoDB connection error. Please make sure MongoDB is running. ' + err
-    )
-    process.exit(1)
-  })
-/**
- * Error Handler. Provides full stack - remove for production
- */
-app.use(errorHandler())
+  .catch((err) => err.message)
