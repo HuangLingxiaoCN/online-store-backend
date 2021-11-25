@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import app from './app'
 // import { MONGODB_URI } from './util/secrets'
 
-const mongoUrl = 'mongodb://localhost:27017/product'
+const mongoUrl = 'mongodb://localhost:27017/store'
 
 mongoose
   .connect(mongoUrl, {
