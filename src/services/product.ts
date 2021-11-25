@@ -1,20 +1,20 @@
 import { NotFoundError } from '../helpers/apiError'
-import Product, { ProductDocument } from '../models/Product'
+import Product, { ProductType } from '../models/Product'
 
-const findAll = async (): Promise<ProductDocument[]> => {
+const findAll = async (): Promise<ProductType[]> => {
   return Product.find().sort({ price: 1, name: 1 })
 }
 
-const create = async (product: ProductDocument): Promise<ProductDocument> => {
+const create = async (product: ProductType): Promise<ProductType> => {
   return product.save()
 }
 
 // ======================================================
-const findById = async (productId: string): Promise<ProductDocument> => {
+const findById = async (productId: string): Promise<ProductType> => {
   const foundProduct = await Product.findById(productId)
 
   if (!foundProduct) {
-    throw new NotFoundError(`Movie ${productId} not found`)
+    throw new NotFoundError(`Product ${productId} not found`)
   }
 
   return foundProduct
@@ -22,8 +22,8 @@ const findById = async (productId: string): Promise<ProductDocument> => {
 
 const update = async (
   productId: string,
-  update: Partial<ProductDocument>
-): Promise<ProductDocument | null> => {
+  update: Partial<ProductType>
+): Promise<ProductType | null> => {
   const foundProduct = await Product.findByIdAndUpdate(productId, update, {
     new: true,
   })
@@ -37,7 +37,7 @@ const update = async (
 
 const deleteProduct = async (
   productId: string
-): Promise<ProductDocument | null> => {
+): Promise<ProductType | null> => {
   const foundProduct = Product.findByIdAndDelete(productId)
 
   if (!foundProduct) {

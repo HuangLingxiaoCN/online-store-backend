@@ -1,5 +1,5 @@
 ###
-POST http://localhost:8080/product/products
+POST http://localhost:8080/store/products
 content-type: application/json
 
 {
@@ -10,7 +10,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:8080/product/products
+POST http://localhost:8080/store/products
 content-type: application/json
 
 {
@@ -21,7 +21,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:8080/product/products
+POST http://localhost:8080/store/products
 Content-Type: application/json
 
 {
@@ -33,13 +33,13 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:8080/product/products
+GET http://localhost:8080/store/products
 
 ###
-GET http://localhost:8080/product/products/619aa7a2f813075a4822a9a2
+GET http://localhost:8080/store/products/619aa9a664644257408d9fab
 
 ###
-PUT http://localhost:8080/product/products/619a9b7a26bb485578bd865e
+PUT http://localhost:8080/store/products/619a9b7a26bb485578bd865e
 Content-Type: application/json
 
 {
@@ -50,4 +50,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:8080/product/products/619aa93420556c23b4c74105
+DELETE  http://localhost:8080/store/products/619aa93420556c23b4c74105

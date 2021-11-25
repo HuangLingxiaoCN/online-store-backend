@@ -3,14 +3,14 @@ import mongoose, { Document } from 'mongoose'
 // Requirements:
 // customer(cart inside customer) & product models and schemas
 
-export type ProductDocument = Document & {
+export type ProductType = Document & {
   name: string
   price: number
   genre: string
   numberinStock: number
 }
 
-const productSchema = new mongoose.Schema<ProductDocument>({
+export const productSchema = new mongoose.Schema<ProductType>({
   name: {
     type: String,
     index: true,
@@ -29,4 +29,4 @@ const productSchema = new mongoose.Schema<ProductDocument>({
   },
 })
 
-export default mongoose.model<ProductDocument>('Product', productSchema)
+export default mongoose.model<ProductType>('Product', productSchema)

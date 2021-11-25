@@ -6,6 +6,7 @@ import lusca from 'lusca'
 import compression from 'compression'
 
 import productRouter from './routers/product'
+import cartItemsRouter from './routers/cartItems'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -19,7 +20,8 @@ app.use(express.json())
 app.use(lusca.xframe('SAMEORIGIN'))
 app.use(lusca.xssProtection(true))
 
-app.use('/product/products', productRouter)
+app.use('/store/products', productRouter)
+app.use('/store/cartItems', cartItemsRouter)
 
 // Custom API error handler
 app.use(apiErrorHandler)
