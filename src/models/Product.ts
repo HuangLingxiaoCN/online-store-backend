@@ -13,6 +13,7 @@ export type ProductType = Document & {
 export const productSchema = new mongoose.Schema<ProductType>({
   name: {
     type: String,
+    unique: true,
     index: true,
   },
   price: {
