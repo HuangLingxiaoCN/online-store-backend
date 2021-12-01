@@ -1,18 +1,6 @@
-import mongoose, { Document } from 'mongoose'
+import mongoose from 'mongoose'
 
-// Requirements:
-// customer(cart inside customer) & product models and schemas
-
-export type ProductType = Document & {
-  imageUrl: string
-  name: string
-  price: number
-  description: string
-  genre: string
-  numberInStock: number
-}
-
-export const productSchema = new mongoose.Schema<ProductType>({
+export const productSchema = new mongoose.Schema({
   imageUrl: {
     type: String,
     default: 'emptyUrl',
@@ -41,4 +29,4 @@ export const productSchema = new mongoose.Schema<ProductType>({
   },
 })
 
-export default mongoose.model<ProductType>('Product', productSchema)
+export default mongoose.model('Product', productSchema)
