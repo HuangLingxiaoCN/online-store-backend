@@ -1,10 +1,12 @@
 import express from 'express'
 
-import { createUser, addCartItem } from '../controllers/user'
+import authorization from '../middlewares/authorization'
+import { getUser, registerUser, addCartItem } from '../controllers/user'
 
 const router = express.Router()
 
-router.post('/', createUser)
+router.get('/me', authorization, getUser)
+router.post('/', registerUser)
 router.patch('/', addCartItem)
 
 export default router

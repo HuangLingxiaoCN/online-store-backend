@@ -1,4 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
+import bcrypt from 'bcrypt'
+import dotenv from 'dotenv'
+import * as jwt from 'jsonwebtoken'
+import _ from 'lodash'
 
 import User from '../models/User'
 import UserService from '../services/user'
@@ -6,8 +10,31 @@ import CartItem from '../models/CartItem'
 import Product from '../models/Product'
 import { BadRequestError } from '../helpers/apiError'
 
+dotenv.config()
+const jwtKey: any = process.env.JWT_SECRET
+
+// GET one user
+export const getUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    //
+    let user: any = req.user
+    user = await UserService.getUser(user._id)
+    res.send(user)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
 // POST
-export const createUser = async (
+export const registerUser = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -18,8 +45,16 @@ export const createUser = async (
     if (user) return res.status(400).send('The user has already registered.')
 
     user = new User({ name, email, password })
-    await UserService.create(user)
-    res.status(201).send(user)
+    // bcrypt
+    const salt = await bcrypt.genSalt(10)
+    user.password = await bcrypt.hash(password, salt)
+
+    await UserService.register(user)
+    const token = jwt.sign({ _id: user._id }, jwtKey)
+    res
+      .header('x-auth-token', token)
+      .status(201)
+      .send(_.pick(user, ['name', 'email']))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
@@ -48,8 +83,6 @@ export const addCartItem = async (
       price: product.price * quantity,
       quantity,
     })
-
-    console.log(newItem)
 
     user.cart.push(newItem)
     await UserService.addCartItem(user)

@@ -1,0 +1,10 @@
+GET http://localhost:3000/store/user/me
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE4ZDE1MzJmZGEyNzNkYTg4NGE1NWQiLCJpYXQiOjE2Mzg0ODcxMjF9.lSTYRpzxMZ_7vk1V29HhN89lrXBf3EVdKoS_WwJOB40
+
+###
+GET http://localhost:3000/store/user/me
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE5Mzc3OTZiYjg0ODM2MTA3NTNkNTciLCJpYXQiOjE2Mzg0ODc2NTh9.FV1rFmjoW9da4FlPrfqpiJFaLY06jpL-HEZdl64vVn8
+
+###
+GET http://localhost:3000/store/user/me
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE4YmE3NWY3N2VjNjRkOWM2NzZkOWQiLCJpYXQiOjE2Mzg0ODc2ODR9.UYdxdjPYu_5_JM7suBBURXwWgYaaL8Q4DpvJr4DTCYc

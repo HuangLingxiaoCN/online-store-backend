@@ -1,25 +1,14 @@
 import mongoose, { Document } from 'mongoose'
+import dotenv from 'dotenv'
+import * as jwt from 'jsonwebtoken'
+
 import { CartItemType, cartItemSchema } from './CartItem'
+
+dotenv.config()
+const jwtKey: any = process.env.JWT_SECRET
 
 // Requirements:
 // customer(cart inside customer) & product models and schemas
-
-// export type ItemType = Document & {
-//   productName: string,
-//   price: number,
-//   quantity: number
-// }
-
-// export const itemSchema = new mongoose.Schema<ItemType>({
-//   productName: String,
-//   price: Number,
-//   quantity: {
-//     type: Number,
-//     default: 1
-//   }
-// })
-
-// export const Item = mongoose.model('item', itemSchema)
 
 export type UserType = Document & {
   name: string
@@ -50,5 +39,10 @@ const userSchema = new mongoose.Schema<UserType>({
   },
   cart: [cartItemSchema],
 })
+
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign({ _id: this._id }, jwtKey)
+  return token
+}
 
 export default mongoose.model<UserType>('User', userSchema)

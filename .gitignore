@@ -39,3 +39,6 @@ dist/**/*
 
 *.swo
 *.swp
+
+# Database seeding
+src/seed/

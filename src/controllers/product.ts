@@ -28,11 +28,14 @@ export const createProduct = async (
   next: NextFunction
 ) => {
   try {
-    const { name, price, genre, numberInStock } = req.body
+    const { imageUrl, name, price, description, genre, numberInStock } =
+      req.body
 
     const product = new Product({
+      imageUrl,
       name,
       price,
+      description,
       genre,
       numberInStock,
     })
@@ -57,8 +60,8 @@ export const updateProduct = async (
   try {
     const update = req.body
     const productId = req.params.productId
-    const updatedMovie = await ProductService.update(productId, update)
-    res.json(updatedMovie)
+    const updatedProduct = await ProductService.update(productId, update)
+    res.json(updatedProduct)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

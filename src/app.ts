@@ -7,8 +7,15 @@ import compression from 'compression'
 
 import productRouter from './routers/product'
 import userRouter from './routers/user'
+import auth from './routers/auth'
 
-dotenv.config({ path: '.env' })
+dotenv.config()
+
+if (!process.env.JWT_SECRET) {
+  console.log('FATAL ERROR: JWT_SECRET is not defined.')
+  process.exit(1)
+}
+
 const app = express()
 
 app.set('port', process.env.PORT || 3000)
@@ -22,6 +29,7 @@ app.use(lusca.xssProtection(true))
 
 app.use('/store/products', productRouter)
 app.use('/store/user', userRouter)
+app.use('/store/auth', auth)
 
 // Custom API error handler
 app.use(apiErrorHandler)
