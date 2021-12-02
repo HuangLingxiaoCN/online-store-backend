@@ -3,8 +3,8 @@ content-type: application/json
 
 {
   "name": "Jason",
-  "email": "jason@gmail.com",
-  "password": "password"
+  "email": "Jason@gmail.com",
+  "password": "Jasonpassword"
 }
 
 ###
@@ -14,7 +14,27 @@ content-type: application/json
 {
   "name": "HuKai",
   "email": "HuKai@gmail.com",
-  "password": "password"
+  "password": "HuKaipassword"
+}
+
+###
+POST http://localhost:8080/store/user
+content-type: application/json
+
+{
+  "name": "Kyle",
+  "email": "Kyle@gmail.com",
+  "password": "Kylepassword"
+}
+
+###
+POST http://localhost:8080/store/user
+content-type: application/json
+
+{
+  "name": "Rose",
+  "email": "Rose@gmail.com",
+  "password": "Rosepassword"
 }
 
 ###
@@ -22,8 +42,8 @@ PATCH http://localhost:8080/store/user
 content-type: application/json
 
 {
-  "email": "jason@gmail.com",
-  "productName": "laptop",
+  "email": "Jason@gmail.com",
+  "productName": "Solid Gold Petite Micropave",
   "quantity": 1
 }
 
@@ -32,8 +52,8 @@ PATCH http://localhost:8080/store/user
 content-type: application/json
 
 {
-  "email": "jason@gmail.com",
-  "productName": "router",
+  "email": "Jason@gmail.com",
+  "productName": "Mens Cotton Jacket",
   "quantity": 2
 }
 
@@ -43,6 +63,6 @@ content-type: application/json
 
 {
   "email": "HuKai@gmail.com",
-  "productName": "desktop",
+  "productName": "SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s",
   "quantity": 2
 }

@@ -7,6 +7,7 @@ import compression from 'compression'
 
 import productRouter from './routers/product'
 import userRouter from './routers/user'
+import auth from './routers/auth'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -22,6 +23,7 @@ app.use(lusca.xssProtection(true))
 
 app.use('/store/products', productRouter)
 app.use('/store/user', userRouter)
+app.use('/store/auth', auth)
 
 // Custom API error handler
 app.use(apiErrorHandler)
