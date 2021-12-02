@@ -6,6 +6,7 @@ const mongoUrl = 'mongodb://localhost:27017/store'
 
 mongoose.connect(mongoUrl)
 
+//https://fakestoreapi.com/
 const products = [
   new Product({
     name: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',

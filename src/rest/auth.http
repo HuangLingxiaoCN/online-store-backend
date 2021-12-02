@@ -1,0 +1,16 @@
+POST http://localhost:8080/store/auth
+content-type: application/json
+
+{
+  "email": "jason@gmail.com",
+  "password": "Jasonpassword"
+}
+
+###
+POST http://localhost:8080/store/auth
+content-type: application/json
+
+{
+  "email": "Rose@gmail.com",
+  "password": "Rosepassword"
+}

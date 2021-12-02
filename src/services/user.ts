@@ -1,7 +1,7 @@
 import { NotFoundError } from '../helpers/apiError'
 import User, { UserType } from '../models/User'
 
-const create = async (User: UserType): Promise<UserType> => {
+const register = async (User: UserType): Promise<UserType> => {
   return User.save()
 }
 
@@ -10,6 +10,6 @@ const addCartItem = async (User: UserType): Promise<UserType> => {
 }
 
 export default {
-  create,
+  register,
   addCartItem,
 }

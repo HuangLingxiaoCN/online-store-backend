@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
+import bcrypt from 'bcrypt'
+import _ from 'lodash'
 
 import User from '../models/User'
 import UserService from '../services/user'
@@ -7,7 +9,7 @@ import Product from '../models/Product'
 import { BadRequestError } from '../helpers/apiError'
 
 // POST
-export const createUser = async (
+export const registerUser = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -18,8 +20,12 @@ export const createUser = async (
     if (user) return res.status(400).send('The user has already registered.')
 
     user = new User({ name, email, password })
-    await UserService.create(user)
-    res.status(201).send(user)
+    // bcrypt
+    const salt = await bcrypt.genSalt(10)
+    user.password = await bcrypt.hash(password, salt)
+
+    await UserService.register(user)
+    res.status(201).send(_.pick(user, ['name', 'email']))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
@@ -48,8 +54,6 @@ export const addCartItem = async (
       price: product.price * quantity,
       quantity,
     })
-
-    console.log(newItem)
 
     user.cart.push(newItem)
     await UserService.addCartItem(user)

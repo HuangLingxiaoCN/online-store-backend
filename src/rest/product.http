@@ -50,4 +50,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:8080/store/products/619aa93420556c23b4c74105
+DELETE  http://localhost:8080/store/products/61a7e70668794f46605862a0
