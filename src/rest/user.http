@@ -1,4 +1,4 @@
-POST http://localhost:8080/store/user
+POST http://localhost:3000/store/user
 content-type: application/json
 
 {
@@ -8,7 +8,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:8080/store/user
+POST http://localhost:3000/store/user
 content-type: application/json
 
 {
@@ -18,7 +18,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:8080/store/user
+POST http://localhost:3000/store/user
 content-type: application/json
 
 {
@@ -28,7 +28,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:8080/store/user
+POST http://localhost:3000/store/user
 content-type: application/json
 
 {
@@ -38,7 +38,7 @@ content-type: application/json
 }
 
 ###
-PATCH http://localhost:8080/store/user
+PATCH http://localhost:3000/store/user
 content-type: application/json
 
 {
@@ -48,7 +48,7 @@ content-type: application/json
 }
 
 ###
-PATCH http://localhost:8080/store/user
+PATCH http://localhost:3000/store/user
 content-type: application/json
 
 {
@@ -58,7 +58,7 @@ content-type: application/json
 }
 
 ###
-PATCH http://localhost:8080/store/user
+PATCH http://localhost:3000/store/user
 content-type: application/json
 
 {

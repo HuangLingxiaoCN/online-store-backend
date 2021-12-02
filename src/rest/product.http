@@ -1,6 +1,7 @@
 ###
-POST http://localhost:8080/store/products
+POST http://localhost:3000/store/products
 content-type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE4ZDE1MzJmZGEyNzNkYTg4NGE1NWQiLCJpYXQiOjE2Mzg0ODM0MDF9.ZcHNp1UYz6-mw3O3-QzN6K03tmxD6_IfZly8OFsjMEs
 
 {
   "name": "laptop",
@@ -10,7 +11,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:8080/store/products
+POST http://localhost:3000/store/products
 content-type: application/json
 
 {
@@ -21,7 +22,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:8080/store/products
+POST http://localhost:3000/store/products
 Content-Type: application/json
 
 {
@@ -33,13 +34,13 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:8080/store/products
+GET http://localhost:3000/store/products
 
 ###
-GET http://localhost:8080/store/products/619aa9a664644257408d9fab
+GET http://localhost:3000/store/products/619aa9a664644257408d9fab
 
 ###
-PUT http://localhost:8080/store/products/619a9b7a26bb485578bd865e
+PUT http://localhost:3000/store/products/619a9b7a26bb485578bd865e
 Content-Type: application/json
 
 {
@@ -50,4 +51,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:8080/store/products/61a7e70668794f46605862a0
+DELETE  http://localhost:3000/store/products/61a7e70668794f46605862a0

@@ -13,9 +13,7 @@ const create = async (product: ProductType): Promise<ProductType> => {
 const findById = async (productId: string): Promise<ProductType> => {
   const foundProduct = await Product.findById(productId)
 
-  if (!foundProduct) {
-    throw new NotFoundError(`Product ${productId} not found`)
-  }
+  if (!foundProduct) throw new NotFoundError(`Product ${productId} not found`)
 
   return foundProduct
 }
@@ -28,9 +26,7 @@ const update = async (
     new: true,
   })
 
-  if (!foundProduct) {
-    throw new NotFoundError(`Product ${productId} not found`)
-  }
+  if (!foundProduct) throw new NotFoundError(`Product ${productId} not found`)
 
   return foundProduct
 }
@@ -40,9 +36,7 @@ const deleteProduct = async (
 ): Promise<ProductType | null> => {
   const foundProduct = Product.findByIdAndDelete(productId)
 
-  if (!foundProduct) {
-    throw new NotFoundError(`Product ${productId} not found`)
-  }
+  if (!foundProduct) throw new NotFoundError(`Product ${productId} not found`)
 
   return foundProduct
 }

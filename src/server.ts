@@ -1,12 +1,13 @@
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 
 import app from './app'
-// import { MONGODB_URI } from './util/secrets'
 
-const mongoUrl = 'mongodb://localhost:27017/store'
+dotenv.config()
+const host: any = process.env.MONGODB_URI_LOCAL
 
 mongoose
-  .connect(mongoUrl, {
+  .connect(host, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
