@@ -66,3 +66,13 @@ content-type: application/json
   "productName": "SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s",
   "quantity": 2
 }
+
+###
+PATCH http://localhost:3000/store/user
+content-type: application/json
+
+{
+  "email": "Kyle@gmail.com",
+  "productName": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+  "quantity": 10
+}

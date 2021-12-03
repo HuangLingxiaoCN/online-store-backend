@@ -14,7 +14,7 @@ export type UserType = Document & {
   name: string
   email: string
   password: string
-  cart: [CartItemType]
+  cart: CartItemType[]
 }
 
 const userSchema = new mongoose.Schema<UserType>({

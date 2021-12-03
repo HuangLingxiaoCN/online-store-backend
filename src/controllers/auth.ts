@@ -18,11 +18,14 @@ export const authenticateUser = async (
   try {
     const { email, password } = req.body
     const user = await User.findOne({ email: email })
-    if (!user) return res.status(400).send('Invalid email or password.')
+    if (!user) {
+      throw new BadRequestError('Login fails')
+    }
 
     const passwordIsValid = bcrypt.compare(password, user.password)
-    if (!passwordIsValid)
-      return res.status(400).send('Invalid email or password.')
+    if (!passwordIsValid) {
+      throw new BadRequestError('Login fails')
+    }
 
     const token = jwt.sign({ _id: user._id }, jwtKey)
 

@@ -42,7 +42,7 @@ export const registerUser = async (
   try {
     const { name, email, password } = req.body
     let user = await User.findOne({ email: email })
-    if (user) return res.status(400).send('The user has already registered.')
+    if (user) throw new BadRequestError('The user has already registered.')
 
     user = new User({ name, email, password })
     // bcrypt
@@ -73,10 +73,10 @@ export const addCartItem = async (
   try {
     const { productName, email, quantity } = req.body
     const product = await Product.findOne({ name: productName })
-    if (!product) return res.status(400).send('The product does not exit.')
+    if (!product) throw new BadRequestError('The product does not exit.')
 
     const user = await User.findOne({ email: email })
-    if (!user) return res.status(400).send('The user does not exit.')
+    if (!user) throw new BadRequestError('The user does not exit.')
 
     const newItem = new CartItem({
       productName,

@@ -15,7 +15,7 @@ export type ProductType = Document & {
 export const productSchema = new mongoose.Schema<ProductType>({
   imageUrl: {
     type: String,
-    default: 'emptyUrl',
+    default: '',
   },
   name: {
     type: String,
