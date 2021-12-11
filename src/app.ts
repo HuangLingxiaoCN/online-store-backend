@@ -27,9 +27,9 @@ app.use(express.json())
 app.use(lusca.xframe('SAMEORIGIN'))
 app.use(lusca.xssProtection(true))
 
-app.use('/store/products', productRouter)
-app.use('/store/user', userRouter)
-app.use('/store/auth', auth)
+app.use('/api/products', productRouter)
+app.use('/api/user', userRouter)
+app.use('/api/auth', auth)
 
 // Custom API error handler
 app.use(apiErrorHandler)

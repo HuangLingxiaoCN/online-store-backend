@@ -14,7 +14,7 @@ const router = express.Router()
 router.get('/', findAll)
 router.get('/:productId', findById)
 router.post('/', authorization, createProduct)
-router.put('/:productId', updateProduct)
-router.delete('/:productId', deleteProduct)
+router.put('/:productId', authorization, updateProduct)
+router.delete('/:productId', authorization, deleteProduct)
 
 export default router

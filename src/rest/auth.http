@@ -1,4 +1,4 @@
-POST http://localhost:3000/store/auth
+POST http://localhost:3000/api/auth
 content-type: application/json
 
 {
@@ -7,7 +7,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3000/store/auth
+POST http://localhost:3000/api/auth
 content-type: application/json
 
 {
@@ -16,7 +16,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3000/store/auth
+POST http://localhost:3000/api/auth
 content-type: application/json
 
 {

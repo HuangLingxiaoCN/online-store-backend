@@ -1,4 +1,24 @@
-POST http://localhost:3000/store/user
+GET http://localhost:3000/api/user
+
+###
+GET http://localhost:3000/api/user/me
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE4ZDE1MzJmZGEyNzNkYTg4NGE1NWQiLCJpYXQiOjE2Mzg0ODcxMjF9.lSTYRpzxMZ_7vk1V29HhN89lrXBf3EVdKoS_WwJOB40
+
+###
+GET http://localhost:3000/api/user/me
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE5Mzc3OTZiYjg0ODM2MTA3NTNkNTciLCJpYXQiOjE2MzkyNDMzOTJ9.wvCPqLl8IhPBNX1E5OWO5_1Y9QEeEEkK00wV7MuSwZ4
+
+###
+PATCH http://localhost:3000/api/user/61a8ba75f77ec64d9c676d9d
+content-type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE5Mzc3OTZiYjg0ODM2MTA3NTNkNTciLCJpYXQiOjE2Mzg0ODc2NTh9.FV1rFmjoW9da4FlPrfqpiJFaLY06jpL-HEZdl64vVn8
+
+{
+  "email": "HuKai@outlook.com"
+}
+
+###
+POST http://localhost:3000/api/user
 content-type: application/json
 
 {
@@ -8,7 +28,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3000/store/user
+POST http://localhost:3000/api/user
 content-type: application/json
 
 {
@@ -18,7 +38,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3000/store/user
+POST http://localhost:3000/api/user
 content-type: application/json
 
 {
@@ -28,7 +48,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3000/store/user
+POST http://localhost:3000/api/user
 content-type: application/json
 
 {
@@ -38,7 +58,7 @@ content-type: application/json
 }
 
 ###
-PATCH http://localhost:3000/store/user
+PATCH http://localhost:3000/api/user
 content-type: application/json
 
 {
@@ -48,7 +68,7 @@ content-type: application/json
 }
 
 ###
-PATCH http://localhost:3000/store/user
+PATCH http://localhost:3000/api/user
 content-type: application/json
 
 {
@@ -58,7 +78,7 @@ content-type: application/json
 }
 
 ###
-PATCH http://localhost:3000/store/user
+PATCH http://localhost:3000/api/user
 content-type: application/json
 
 {
@@ -68,7 +88,7 @@ content-type: application/json
 }
 
 ###
-PATCH http://localhost:3000/store/user
+PATCH http://localhost:3000/api/user
 content-type: application/json
 
 {
@@ -76,3 +96,7 @@ content-type: application/json
   "productName": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
   "quantity": 10
 }
+
+###
+DELETE http://localhost:3000/api/user/61a937746bb8483610753d54
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE5Mzc3OTZiYjg0ODM2MTA3NTNkNTciLCJpYXQiOjE2MzkyMzg0MzB9.SOS0nnqTB0EDTYZvctbd2BrlfR9t7apf_F317ws0gXI

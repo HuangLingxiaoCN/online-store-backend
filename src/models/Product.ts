@@ -19,12 +19,12 @@ export const productSchema = new mongoose.Schema<ProductType>({
   },
   name: {
     type: String,
+    required: true,
     unique: true,
     index: true,
   },
   price: {
     type: Number,
-    required: true,
     default: 1,
   },
   description: {

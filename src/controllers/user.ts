@@ -23,7 +23,7 @@ export const getUser = async (
     //
     let user: any = req.user
     user = await UserService.getUser(user._id)
-    res.send(user)
+    res.status(200).send(user)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
@@ -33,7 +33,45 @@ export const getUser = async (
   }
 }
 
-// POST
+// Get all
+export const getAll = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const users = await UserService.getAll()
+    res.status(200).send(users)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// Update user
+export const updateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.params.userId
+    const update = req.body
+    const updatedUser = await UserService.updateUser(userId, update)
+    res.status(200).send(updatedUser)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// register new user
 export const registerUser = async (
   req: Request,
   res: Response,
@@ -54,7 +92,26 @@ export const registerUser = async (
     res
       .header('x-auth-token', token)
       .status(201)
-      .send(_.pick(user, ['name', 'email']))
+      .send(_.pick(user, ['name', 'email', '_id']))
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// Delete user
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.params.userId
+    const deletedUser = await UserService.deleteUser(userId)
+    res.status(200).send(deletedUser)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
