@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import app from './app'
 
 dotenv.config()
-const host: any = process.env.MONGODB_URI_LOCAL
+const host: any = process.env.MONGODB_URI
 
 mongoose
   .connect(host, {

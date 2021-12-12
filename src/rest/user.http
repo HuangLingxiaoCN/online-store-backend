@@ -60,16 +60,18 @@ content-type: application/json
 ###
 PATCH http://localhost:3000/api/user
 content-type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MDEwODQ2MzE3ZjAzODgxM2EiLCJpYXQiOjE2MzkzNDQ2MjN9.ueo0j79cn9ujx1U4bluESjckXfLU0ErFcV5UkZqoGXo
 
 {
   "email": "Jason@gmail.com",
-  "productName": "Solid Gold Petite Micropave",
+  "productName": "Silicon Power 256GB SSD 3D NAND A55 SLC Cache Performance Boost SATA III 2.5",
   "quantity": 1
 }
 
 ###
 PATCH http://localhost:3000/api/user
 content-type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MDEwODQ2MzE3ZjAzODgxM2EiLCJpYXQiOjE2MzkzNDQ2MjN9.ueo0j79cn9ujx1U4bluESjckXfLU0ErFcV5UkZqoGXo
 
 {
   "email": "Jason@gmail.com",
@@ -80,6 +82,7 @@ content-type: application/json
 ###
 PATCH http://localhost:3000/api/user
 content-type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MzEwODQ2MzE3ZjAzODgxM2QiLCJpYXQiOjE2MzkzNDQ2OTR9.0z9B2RZkxI3dF_phQxBOEw279DvyEBSGKXk-ZimG6FI
 
 {
   "email": "HuKai@gmail.com",
