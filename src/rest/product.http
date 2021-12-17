@@ -13,6 +13,19 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE4ZDE1MzJmZGEyN
 ###
 POST http://localhost:3000/api/products
 content-type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE4ZDE1MzJmZGEyNzNkYTg4NGE1NWQiLCJpYXQiOjE2Mzg0ODM0MDF9.ZcHNp1UYz6-mw3O3-QzN6K03tmxD6_IfZly8OFsjMEs
+
+{
+  "name": "desktop",
+  "price": "1000",
+  "genre": "electronic",
+  "numberInStock": 10
+}
+
+
+###
+POST http://localhost:3000/api/products
+content-type: application/json
 
 {
   "name": "router",

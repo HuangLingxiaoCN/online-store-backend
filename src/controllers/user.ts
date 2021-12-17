@@ -6,9 +6,10 @@ import _ from 'lodash'
 
 import User from '../models/User'
 import UserService from '../services/user'
+import ProductService from '../services/product'
 import CartItem from '../models/CartItem'
 import Product from '../models/Product'
-import { BadRequestError } from '../helpers/apiError'
+import { BadRequestError, NotFoundError } from '../helpers/apiError'
 
 dotenv.config()
 const jwtKey: any = process.env.JWT_SECRET
@@ -121,7 +122,7 @@ export const deleteUser = async (
   }
 }
 
-// PATCH
+// PATCH new cart item
 export const addCartItem = async (
   req: Request,
   res: Response,
@@ -130,10 +131,10 @@ export const addCartItem = async (
   try {
     const { productName, email, quantity } = req.body
     const product = await Product.findOne({ name: productName })
-    if (!product) throw new BadRequestError('The product does not exit.')
+    if (!product) throw new NotFoundError('The product does not exit.')
 
     const user = await User.findOne({ email: email })
-    if (!user) throw new BadRequestError('The user does not exit.')
+    if (!user) throw new NotFoundError('The user does not exit.')
 
     const newItem = new CartItem({
       productName,
@@ -142,8 +143,132 @@ export const addCartItem = async (
     })
 
     user.cart.push(newItem)
-    await UserService.addCartItem(user)
-    res.send(user)
+    await UserService.handleCartItem(user)
+    res.send(newItem)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// PATCH Increment cart item
+export const incrementCartItem = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) throw new NotFoundError('The user does not exit.')
+
+    const cartItem = user.cart.find(
+      (item) => item._id.toString() === req.body.itemId
+    )
+    if (!cartItem) throw new NotFoundError('The cart item does not exist.')
+
+    const singlePrice = cartItem.price / cartItem.quantity
+    cartItem.quantity++
+    cartItem.price = cartItem.quantity * singlePrice
+    await UserService.handleCartItem(user)
+    res.send(cartItem)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// PATCH Decrement cart item
+export const decrementCartItem = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) throw new NotFoundError('The user does not exit.')
+
+    const cartItem = user.cart.find(
+      (item) => item._id.toString() === req.body.itemId
+    )
+    if (!cartItem) throw new NotFoundError('The cart item does not exist.')
+
+    const singlePrice = cartItem.price / cartItem.quantity
+    cartItem.quantity--
+    cartItem.price = cartItem.quantity * singlePrice
+    await UserService.handleCartItem(user)
+    res.send(cartItem)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// DELETE delete a cart item
+export const deleteCartItem = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) throw new NotFoundError('The user does not exit.')
+
+    const cartItem = user.cart.find(
+      (item) => item._id.toString() === req.body.itemId
+    )
+    if (!cartItem) throw new NotFoundError('The cart item does not exist.')
+
+    const index = user.cart.indexOf(cartItem)
+    user.cart.splice(index, 1)
+    await UserService.handleCartItem(user)
+    res.send(cartItem)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// TODO: 1. remove a listing item
+//       2. update a listing item
+
+// PATCH new listing item
+export const addListing = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { product, email } = req.body
+    const { imageUrl, price, description, numberInStock, name, genre } = product
+    const user = await User.findOne({ email: email })
+    if (!user) throw new BadRequestError('The user does not exit.')
+
+    const newListing = new Product({
+      imageUrl,
+      price,
+      description,
+      numberInStock,
+      name,
+      genre,
+      owner: user._id,
+    })
+
+    user.listings.push(newListing)
+    await UserService.addListing(user)
+    await ProductService.create(newListing)
+    res.status(201).send(newListing)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

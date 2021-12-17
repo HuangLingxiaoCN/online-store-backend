@@ -3,18 +3,20 @@ import dotenv from 'dotenv'
 import * as jwt from 'jsonwebtoken'
 
 import { CartItemType, cartItemSchema } from './CartItem'
+import { ProductType, productSchema } from './Product'
 
 dotenv.config()
 const jwtKey: any = process.env.JWT_SECRET
 
 // Requirements:
-// customer(cart inside customer) & product models and schemas
+// customer(cart and listings inside customer) & product models and schemas
 
 export type UserType = Document & {
   name: string
   email: string
   password: string
   cart: CartItemType[]
+  listings: ProductType[]
 }
 
 const userSchema = new mongoose.Schema<UserType>({
@@ -38,6 +40,7 @@ const userSchema = new mongoose.Schema<UserType>({
     maxlength: 1024,
   },
   cart: [cartItemSchema],
+  listings: [productSchema],
 })
 
 userSchema.methods.generateAuthToken = function () {

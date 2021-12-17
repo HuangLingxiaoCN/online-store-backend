@@ -10,6 +10,8 @@ export type ProductType = Document & {
   description: string
   genre: string
   numberInStock: number
+  // owner of the posted product
+  owner: mongoose.Types.ObjectId
 }
 
 export const productSchema = new mongoose.Schema<ProductType>({
@@ -20,8 +22,6 @@ export const productSchema = new mongoose.Schema<ProductType>({
   name: {
     type: String,
     required: true,
-    unique: true,
-    index: true,
   },
   price: {
     type: Number,
@@ -39,6 +39,7 @@ export const productSchema = new mongoose.Schema<ProductType>({
     type: Number,
     default: 1,
   },
+  owner: mongoose.Types.ObjectId,
 })
 
 export default mongoose.model<ProductType>('Product', productSchema)

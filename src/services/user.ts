@@ -35,14 +35,20 @@ const deleteUser = async (userId: string): Promise<UserType> => {
   return foundUser
 }
 
-const addCartItem = async (User: UserType): Promise<UserType> => {
+// add, increment, decrement
+const handleCartItem = async (User: UserType): Promise<UserType> => {
+  return User.save()
+}
+
+const addListing = async (User: UserType): Promise<UserType> => {
   return User.save()
 }
 
 export default {
   getUser,
   register,
-  addCartItem,
+  handleCartItem,
+  addListing,
   getAll,
   updateUser,
   deleteUser,

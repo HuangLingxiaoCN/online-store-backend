@@ -57,8 +57,8 @@ content-type: application/json
   "password": "Rosepassword"
 }
 
-###
-PATCH http://localhost:3000/api/user
+### ------------------------------------------ add cart items -----------------------------------------------------
+PATCH http://localhost:3000/api/user/cart/add
 content-type: application/json
 x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MDEwODQ2MzE3ZjAzODgxM2EiLCJpYXQiOjE2MzkzNDQ2MjN9.ueo0j79cn9ujx1U4bluESjckXfLU0ErFcV5UkZqoGXo
 
@@ -69,7 +69,7 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MDEwODQ2M
 }
 
 ###
-PATCH http://localhost:3000/api/user
+PATCH http://localhost:3000/api/user/cart/add
 content-type: application/json
 x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MDEwODQ2MzE3ZjAzODgxM2EiLCJpYXQiOjE2MzkzNDQ2MjN9.ueo0j79cn9ujx1U4bluESjckXfLU0ErFcV5UkZqoGXo
 
@@ -80,7 +80,7 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MDEwODQ2M
 }
 
 ###
-PATCH http://localhost:3000/api/user
+PATCH http://localhost:3000/api/user/cart/add
 content-type: application/json
 x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MzEwODQ2MzE3ZjAzODgxM2QiLCJpYXQiOjE2MzkzNDQ2OTR9.0z9B2RZkxI3dF_phQxBOEw279DvyEBSGKXk-ZimG6FI
 
@@ -91,7 +91,7 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MzEwODQ2M
 }
 
 ###
-PATCH http://localhost:3000/api/user
+PATCH http://localhost:3000/api/user/cart/add
 content-type: application/json
 
 {
@@ -99,6 +99,51 @@ content-type: application/json
   "productName": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
   "quantity": 10
 }
+
+### ---------------------------------- Increment, decrement and delete cart item --------------------------------
+PATCH http://localhost:3000/api/user/cart/increment
+content-type: application/json
+
+{
+  "email": "Jason@gmail.com",
+  "itemId": "61bcfb49c1bdab508cc13e21"
+}
+
+###
+PATCH http://localhost:3000/api/user/cart/decrement
+content-type: application/json
+
+{
+  "email": "Jason@gmail.com",
+  "itemId": "61bcfb49c1bdab508cc13e21"
+}
+
+###
+PATCH http://localhost:3000/api/user/cart/delete
+content-type: application/json
+
+{
+  "email": "Jason@gmail.com",
+  "itemId": "61bcfb49c1bdab508cc13e21"
+}
+
+### ---------------------------------- add listings -------------------------------------------------------------
+PATCH http://localhost:3000/api/user/listing/newListing
+content-type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MzEwODQ2MzE3ZjAzODgxM2QiLCJpYXQiOjE2MzkzNDQ2OTR9.0z9B2RZkxI3dF_phQxBOEw279DvyEBSGKXk-ZimG6FI
+
+{
+  "product": {
+    "imageUrl": "https://www.someimage.com",
+    "name": "Asus VivoBook S16",
+    "price": 1600,
+    "description": "best lightweight laptop of Asus",
+    "numberInStock": 1,
+    "genre": "electronic"
+  },
+  "email": "Jason@gmail.com"
+}
+
 
 ###
 DELETE http://localhost:3000/api/user/61a937746bb8483610753d54

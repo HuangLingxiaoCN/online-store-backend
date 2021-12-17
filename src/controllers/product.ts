@@ -2,7 +2,8 @@ import { Request, Response, NextFunction } from 'express'
 
 import Product from '../models/Product'
 import ProductService from '../services/product'
-import { BadRequestError } from '../helpers/apiError'
+import UserService from '../services/user'
+import { BadRequestError, NotFoundError } from '../helpers/apiError'
 
 // GET /products
 export const findAll = async (
@@ -22,14 +23,19 @@ export const findAll = async (
 }
 
 // POST /products
+// TODO: When posting a new product, should also add to owner's listing
+
 export const createProduct = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { imageUrl, name, price, description, genre, numberInStock } =
+    const { imageUrl, name, price, description, genre, numberInStock, owner } =
       req.body
+
+    const foundOwner = await UserService.getUser(owner)
+    if (!foundOwner) throw new NotFoundError('the owner does not exist')
 
     const product = new Product({
       imageUrl,
@@ -38,6 +44,7 @@ export const createProduct = async (
       description,
       genre,
       numberInStock,
+      owner,
     })
 
     await ProductService.create(product)
@@ -81,6 +88,7 @@ export const deleteProduct = async (
     const foundProduct = await ProductService.deleteProduct(
       req.params.productId
     )
+
     res.status(200).json(foundProduct)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
