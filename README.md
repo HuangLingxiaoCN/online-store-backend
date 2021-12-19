@@ -3,8 +3,8 @@
 ### API endpoint: https://fierce-spring-store-backend.herokuapp.com
 ### route: 1. /api/user 2. /api/products 3. /api/user/cart/add,increment,delete
 ### 4. /api/user/listing/add, update, delete 5. /api/auth
-### example: https://fierce-spring-store-backend.herokuapp.com/api/user
-###          https://fierce-spring-store-backend.herokuapp.com/api/products
+example: https://fierce-spring-store-backend.herokuapp.com/api/user
+https://fierce-spring-store-backend.herokuapp.com/api/products
 
 ### A backend project that manages customers and their products by using CRUD operations and store the data in mongoDB Atlas. 
 
