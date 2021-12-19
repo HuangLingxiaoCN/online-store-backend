@@ -1,0 +1,41 @@
+# This file is used to create fake user data
+
+###
+POST http://localhost:3000/api/user
+content-type: application/json
+
+{
+  "name": "Jason",
+  "email": "Jason@gmail.com",
+  "password": "Jasonpassword"
+}
+
+###
+POST http://localhost:3000/api/user
+content-type: application/json
+
+{
+  "name": "HuKai",
+  "email": "HuKai@gmail.com",
+  "password": "HuKaipassword"
+}
+
+###
+POST http://localhost:3000/api/user
+content-type: application/json
+
+{
+  "name": "Kyle",
+  "email": "Kyle@gmail.com",
+  "password": "Kylepassword"
+}
+
+###
+POST http://localhost:3000/api/user
+content-type: application/json
+
+{
+  "name": "Rose",
+  "email": "Rose@gmail.com",
+  "password": "Rosepassword"
+}

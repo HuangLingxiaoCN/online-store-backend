@@ -40,5 +40,5 @@ dist/**/*
 *.swo
 *.swp
 
-# Database seeding
-src/seed/
+# Fake data
+src/data/

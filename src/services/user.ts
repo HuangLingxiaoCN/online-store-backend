@@ -40,7 +40,7 @@ const handleCartItem = async (User: UserType): Promise<UserType> => {
   return User.save()
 }
 
-const addListing = async (User: UserType): Promise<UserType> => {
+const handleListing = async (User: UserType): Promise<UserType> => {
   return User.save()
 }
 
@@ -48,7 +48,7 @@ export default {
   getUser,
   register,
   handleCartItem,
-  addListing,
+  handleListing,
   getAll,
   updateUser,
   deleteUser,

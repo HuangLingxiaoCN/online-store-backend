@@ -7,7 +7,8 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE4ZDE1MzJmZGEyN
   "name": "laptop",
   "price": "1000",
   "genre": "electronic",
-  "numberInStock": 20
+  "numberInStock": 20,
+  "ownerEmail": "Jason@gmail.com"
 }
 
 ###
@@ -17,9 +18,10 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE4ZDE1MzJmZGEyN
 
 {
   "name": "desktop",
-  "price": "1000",
+  "price": "2000",
   "genre": "electronic",
-  "numberInStock": 10
+  "numberInStock": 10,
+  "ownerEmail": "HuKai@gmail.com"
 }
 
 

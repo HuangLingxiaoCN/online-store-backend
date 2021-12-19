@@ -17,46 +17,6 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE5Mzc3OTZiYjg0O
   "email": "HuKai@outlook.com"
 }
 
-###
-POST http://localhost:3000/api/user
-content-type: application/json
-
-{
-  "name": "Jason",
-  "email": "Jason@gmail.com",
-  "password": "Jasonpassword"
-}
-
-###
-POST http://localhost:3000/api/user
-content-type: application/json
-
-{
-  "name": "HuKai",
-  "email": "HuKai@gmail.com",
-  "password": "HuKaipassword"
-}
-
-###
-POST http://localhost:3000/api/user
-content-type: application/json
-
-{
-  "name": "Kyle",
-  "email": "Kyle@gmail.com",
-  "password": "Kylepassword"
-}
-
-###
-POST http://localhost:3000/api/user
-content-type: application/json
-
-{
-  "name": "Rose",
-  "email": "Rose@gmail.com",
-  "password": "Rosepassword"
-}
-
 ### ------------------------------------------ add cart items -----------------------------------------------------
 PATCH http://localhost:3000/api/user/cart/add
 content-type: application/json
@@ -127,8 +87,8 @@ content-type: application/json
   "itemId": "61bcfb49c1bdab508cc13e21"
 }
 
-### ---------------------------------- add listings -------------------------------------------------------------
-PATCH http://localhost:3000/api/user/listing/newListing
+### ---------------------------------- Add, delete and update listings -------------------------------------------------------------
+PATCH http://localhost:3000/api/user/listing/add
 content-type: application/json
 x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MzEwODQ2MzE3ZjAzODgxM2QiLCJpYXQiOjE2MzkzNDQ2OTR9.0z9B2RZkxI3dF_phQxBOEw279DvyEBSGKXk-ZimG6FI
 
@@ -144,6 +104,29 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MzEwODQ2M
   "email": "Jason@gmail.com"
 }
 
+###
+PATCH http://localhost:3000/api/user/listing/update
+content-type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MzEwODQ2MzE3ZjAzODgxM2QiLCJpYXQiOjE2MzkzNDQ2OTR9.0z9B2RZkxI3dF_phQxBOEw279DvyEBSGKXk-ZimG6FI
+
+{
+  "productId": "61beec3f50c89937dcb43651",
+  "update": {
+    "price": 1500,
+    "numberInStock": 10
+  },
+  "email": "Jason@gmail.com"
+}
+
+###
+DELETE http://localhost:3000/api/user/listing/delete
+content-type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MzEwODQ2MzE3ZjAzODgxM2QiLCJpYXQiOjE2MzkzNDQ2OTR9.0z9B2RZkxI3dF_phQxBOEw279DvyEBSGKXk-ZimG6FI
+
+{
+  "productId": "61be1083c2baf427a008a8a2",
+  "email": "Kyle@gmail.com"
+}
 
 ###
 DELETE http://localhost:3000/api/user/61a937746bb8483610753d54

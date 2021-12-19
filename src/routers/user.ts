@@ -9,6 +9,8 @@ import {
   decrementCartItem,
   deleteCartItem,
   addListing,
+  removeListing,
+  updateListing,
   getAll,
   updateUser,
   deleteUser,
@@ -27,6 +29,8 @@ router.patch('/cart/increment', incrementCartItem)
 router.patch('/cart/decrement', decrementCartItem)
 router.patch('/cart/delete', deleteCartItem)
 
-router.patch('/listing/newListing', authorization, addListing)
+router.patch('/listing/add', authorization, addListing)
+router.delete('/listing/delete', authorization, removeListing)
+router.patch('/listing/update', authorization, updateListing)
 
 export default router

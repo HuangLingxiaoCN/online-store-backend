@@ -4,6 +4,7 @@ import Product from '../models/Product'
 import ProductService from '../services/product'
 import UserService from '../services/user'
 import { BadRequestError, NotFoundError } from '../helpers/apiError'
+import User from '../models/User'
 
 // GET /products
 export const findAll = async (
@@ -23,18 +24,23 @@ export const findAll = async (
 }
 
 // POST /products
-// TODO: When posting a new product, should also add to owner's listing
-
 export const createProduct = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { imageUrl, name, price, description, genre, numberInStock, owner } =
-      req.body
+    const {
+      imageUrl,
+      name,
+      price,
+      description,
+      genre,
+      numberInStock,
+      ownerEmail,
+    } = req.body
 
-    const foundOwner = await UserService.getUser(owner)
+    const foundOwner = await User.findOne({ email: ownerEmail })
     if (!foundOwner) throw new NotFoundError('the owner does not exist')
 
     const product = new Product({
@@ -44,10 +50,12 @@ export const createProduct = async (
       description,
       genre,
       numberInStock,
-      owner,
+      ownerEmail,
     })
 
+    foundOwner.listings.push(product)
     await ProductService.create(product)
+    await UserService.handleListing(foundOwner)
     res.json(product)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {

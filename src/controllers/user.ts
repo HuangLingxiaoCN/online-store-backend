@@ -8,7 +8,7 @@ import User from '../models/User'
 import UserService from '../services/user'
 import ProductService from '../services/product'
 import CartItem from '../models/CartItem'
-import Product from '../models/Product'
+import Product, { ProductType } from '../models/Product'
 import { BadRequestError, NotFoundError } from '../helpers/apiError'
 
 dotenv.config()
@@ -240,9 +240,6 @@ export const deleteCartItem = async (
   }
 }
 
-// TODO: 1. remove a listing item
-//       2. update a listing item
-
 // PATCH new listing item
 export const addListing = async (
   req: Request,
@@ -253,7 +250,7 @@ export const addListing = async (
     const { product, email } = req.body
     const { imageUrl, price, description, numberInStock, name, genre } = product
     const user = await User.findOne({ email: email })
-    if (!user) throw new BadRequestError('The user does not exit.')
+    if (!user) throw new NotFoundError('The user does not exit.')
 
     const newListing = new Product({
       imageUrl,
@@ -266,9 +263,84 @@ export const addListing = async (
     })
 
     user.listings.push(newListing)
-    await UserService.addListing(user)
+    await UserService.handleListing(user)
     await ProductService.create(newListing)
     res.status(201).send(newListing)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// DELETE a listing
+export const removeListing = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { productId, email } = req.body
+    const product = await ProductService.findById(productId)
+    if (!product) throw new NotFoundError('Product not found')
+
+    const user = await User.findOne({ email: email })
+    if (!user) throw new NotFoundError('The user does not exit.')
+
+    const deletedListing = user.listings.find(
+      (l) => l._id.toString() === productId
+    )
+    if (!deletedListing)
+      throw new NotFoundError('The listing does not exist on this user.')
+    const idx = user.listings.indexOf(deletedListing)
+    user.listings.splice(idx, 1)
+
+    await UserService.handleListing(user)
+    await ProductService.deleteProduct(productId)
+    res.send(deletedListing)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// UPDATE a listing
+export const updateListing = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { productId, update, email } = req.body
+    const product = await ProductService.findById(productId)
+    if (!product) throw new NotFoundError('Product not found')
+
+    const user = await User.findOne({ email: email })
+    if (!user) throw new NotFoundError('The user does not exit.')
+
+    const updatedListing = user.listings.find(
+      (l) => l._id.toString() === productId
+    )
+    if (!updatedListing)
+      throw new NotFoundError('the updatedListing does not exit.')
+    const idx = user.listings.indexOf(updatedListing)
+
+    // create a copy of updated listing and update value
+    const newListing: any = _.merge(user.listings[idx], update)
+    console.log(newListing)
+
+    // Replace the old listing with new listing
+    // user.listings.splice(idx, 1, newListing)
+    user.listings[idx] = newListing
+
+    await UserService.handleListing(user)
+    await ProductService.update(productId, update)
+    res.send(newListing)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
