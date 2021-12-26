@@ -11,15 +11,13 @@ import userRouter from './routers/user'
 import auth from './routers/auth'
 
 dotenv.config()
+const app = express()
+app.use(cors())
 
 if (!process.env.JWT_SECRET) {
   console.log('FATAL ERROR: JWT_SECRET is not defined.')
   process.exit(1)
 }
-
-const app = express()
-
-app.use(cors())
 
 app.set('port', process.env.PORT || 3000)
 app.use(express.json())

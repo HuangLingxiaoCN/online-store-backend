@@ -9,15 +9,17 @@ const apiErrorHandler_1 = __importDefault(require("./middlewares/apiErrorHandler
 const apiContentType_1 = __importDefault(require("./middlewares/apiContentType"));
 const lusca_1 = __importDefault(require("lusca"));
 const compression_1 = __importDefault(require("compression"));
+const cors_1 = __importDefault(require("cors"));
 const product_1 = __importDefault(require("./routers/product"));
 const user_1 = __importDefault(require("./routers/user"));
 const auth_1 = __importDefault(require("./routers/auth"));
 dotenv_1.default.config();
+const app = express_1.default();
+app.use(cors_1.default());
 if (!process.env.JWT_SECRET) {
     console.log('FATAL ERROR: JWT_SECRET is not defined.');
     process.exit(1);
 }
-const app = express_1.default();
 app.set('port', process.env.PORT || 3000);
 app.use(express_1.default.json());
 // Use common 3rd-party middlewares
