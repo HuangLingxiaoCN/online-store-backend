@@ -7,7 +7,7 @@
     "url": "https://github.com/Microsoft/TypeScript-Node-Starter"
   },
   "engines": {
-    "node": "v14.17.0"
+    "node": "v16.13.1"
   },
   "author": "Bowden Kelly",
   "license": "MIT",
@@ -29,11 +29,13 @@
     "@babel/plugin-transform-modules-commonjs": "^7.16.0",
     "@types/bcrypt": "^5.0.0",
     "@types/compression": "^1.7.0",
+    "@types/cors": "^2.8.12",
     "@types/jsonwebtoken": "^8.5.6",
     "@types/lusca": "^1.7.0",
     "@types/mongoose": "^5.11.97",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",

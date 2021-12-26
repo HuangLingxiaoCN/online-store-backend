@@ -4,6 +4,7 @@ import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
 import lusca from 'lusca'
 import compression from 'compression'
+import cors from 'cors'
 
 import productRouter from './routers/product'
 import userRouter from './routers/user'
@@ -17,6 +18,8 @@ if (!process.env.JWT_SECRET) {
 }
 
 const app = express()
+
+app.use(cors())
 
 app.set('port', process.env.PORT || 3000)
 app.use(express.json())
