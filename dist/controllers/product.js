@@ -39,6 +39,9 @@ exports.createProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
         const foundOwner = yield User_1.default.findOne({ email: ownerEmail });
         if (!foundOwner)
             throw new apiError_1.NotFoundError('the owner does not exist');
+        const foundProduct = yield Product_1.default.findOne({ name: name });
+        if (foundProduct)
+            throw new apiError_1.BadRequestError('the product with given name already exists');
         const product = new Product_1.default({
             imageUrl,
             name,

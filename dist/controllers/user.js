@@ -147,6 +147,7 @@ exports.addCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         if (!user)
             throw new apiError_1.NotFoundError('The user does not exit.');
         const newItem = new CartItem_1.default({
+            imageUrl: product.imageUrl,
             productName,
             price: product.price * quantity,
             quantity,

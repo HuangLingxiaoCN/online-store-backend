@@ -43,6 +43,10 @@ export const createProduct = async (
     const foundOwner = await User.findOne({ email: ownerEmail })
     if (!foundOwner) throw new NotFoundError('the owner does not exist')
 
+    const foundProduct = await Product.findOne({ name: name })
+    if (foundProduct)
+      throw new BadRequestError('the product with given name already exists')
+
     const product = new Product({
       imageUrl,
       name,

@@ -8,9 +8,6 @@ import { ProductType, productSchema } from './Product'
 dotenv.config()
 const jwtKey: any = process.env.JWT_SECRET
 
-// Requirements:
-// customer(cart and listings inside customer) & product models and schemas
-
 export type UserType = Document & {
   name: string
   email: string

@@ -1,8 +1,18 @@
 GET http://localhost:3000/api/user
 
 ###
+POST http://localhost:3000/api/user
+content-type: application/json
+
+{
+  "name": "Lisa",
+  "email": "Lisa@gmail.com",
+  "password": "Lisapassword"
+}
+
+###
 GET http://localhost:3000/api/user/me
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE4ZDE1MzJmZGEyNzNkYTg4NGE1NWQiLCJpYXQiOjE2Mzg0ODcxMjF9.lSTYRpzxMZ_7vk1V29HhN89lrXBf3EVdKoS_WwJOB40
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWJhNTkyYjVmOGRjNzJhMzg2OWQxOTQiLCJpYXQiOjE2NDIxOTkyNjF9.68XFA-7pRRbizCrCHukmrn0fL_QHwHrbj_waHyXDpdY
 
 ###
 GET http://localhost:3000/api/user/me

@@ -137,6 +137,7 @@ export const addCartItem = async (
     if (!user) throw new NotFoundError('The user does not exit.')
 
     const newItem = new CartItem({
+      imageUrl: product.imageUrl,
       productName,
       price: product.price * quantity,
       quantity,
