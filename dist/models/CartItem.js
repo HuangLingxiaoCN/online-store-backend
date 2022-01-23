@@ -8,7 +8,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 exports.cartItemSchema = new mongoose_1.default.Schema({
     imageUrl: {
         type: String,
-        default: ''
+        default: '',
     },
     productName: String,
     price: Number,

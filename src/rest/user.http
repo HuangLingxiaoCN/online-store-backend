@@ -12,7 +12,7 @@ content-type: application/json
 
 ###
 GET http://localhost:3000/api/user/me
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWJhNTkyYjVmOGRjNzJhMzg2OWQxOTQiLCJpYXQiOjE2NDIxOTkyNjF9.68XFA-7pRRbizCrCHukmrn0fL_QHwHrbj_waHyXDpdY
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWU0YjdmMmYxODdiNzIxMTA5ZTIwMmYiLCJpYXQiOjE2NDI5MDU1Mjd9.EQZERK7w9W57uX741ylpx1i5uAiVeSbTgEDjcaKOJI4
 
 ###
 GET http://localhost:3000/api/user/me
@@ -72,6 +72,16 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MzEwODQ2M
 }
 
 ### ---------------------------------- Increment, decrement and delete cart item --------------------------------
+PATCH http://localhost:3000/api/user/cart/modify
+content-type: application/json
+
+{
+  "email": "Jason@gmail.com",
+  "itemId": "61ec20ed2e6b4500226133e0",
+  "quantity": 5
+}
+
+###
 PATCH http://localhost:3000/api/user/cart/increment
 content-type: application/json
 

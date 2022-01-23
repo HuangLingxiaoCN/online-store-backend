@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateListing = exports.removeListing = exports.addListing = exports.deleteCartItem = exports.decrementCartItem = exports.incrementCartItem = exports.addCartItem = exports.deleteUser = exports.registerUser = exports.updateUser = exports.getAll = exports.getUser = void 0;
+exports.updateListing = exports.removeListing = exports.addListing = exports.deleteCartItem = exports.decrementCartItem = exports.incrementCartItem = exports.modifyCartItem = exports.addCartItem = exports.deleteUser = exports.registerUser = exports.updateUser = exports.getAll = exports.getUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const jwt = __importStar(require("jsonwebtoken"));
@@ -44,6 +44,7 @@ const Product_1 = __importDefault(require("../models/Product"));
 const apiError_1 = require("../helpers/apiError");
 dotenv_1.default.config();
 const jwtKey = process.env.JWT_SECRET;
+// ------------------------------------User Management -------------------------------------------------//
 // GET one user
 exports.getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -136,6 +137,7 @@ exports.deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         }
     }
 });
+// ------------------------------------Cart Management -------------------------------------------------//
 // PATCH new cart item
 exports.addCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -165,13 +167,42 @@ exports.addCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         }
     }
 });
+// Modify cart item's quantity
+exports.modifyCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { email, itemId, quantity } = req.body;
+        const user = yield User_1.default.findOne({ email: email });
+        if (!user)
+            throw new apiError_1.NotFoundError('The user does not exit.');
+        const cartItem = user.cart.find((item) => item._id.toString() === itemId);
+        if (!cartItem)
+            throw new apiError_1.NotFoundError('The cart item does not exist.');
+        // get the single price of product
+        const product = yield Product_1.default.findOne({ name: cartItem.productName });
+        if (!product)
+            throw new apiError_1.NotFoundError('The product with the same cartItem name does not exit.');
+        cartItem.quantity = quantity;
+        cartItem.price = quantity * product.price;
+        yield user_1.default.handleCartItem(user);
+        res.send(cartItem);
+    }
+    catch (error) {
+        if (error instanceof Error && error.name == 'ValidationError') {
+            next(new apiError_1.BadRequestError('Invalid Request', error));
+        }
+        else {
+            next(error);
+        }
+    }
+});
 // PATCH Increment cart item
 exports.incrementCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield User_1.default.findOne({ email: req.body.email });
+        const { email, itemId } = req.body;
+        const user = yield User_1.default.findOne({ email: email });
         if (!user)
             throw new apiError_1.NotFoundError('The user does not exit.');
-        const cartItem = user.cart.find((item) => item._id.toString() === req.body.itemId);
+        const cartItem = user.cart.find((item) => item._id.toString() === itemId);
         if (!cartItem)
             throw new apiError_1.NotFoundError('The cart item does not exist.');
         const singlePrice = cartItem.price / cartItem.quantity;
@@ -192,10 +223,11 @@ exports.incrementCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0
 // PATCH Decrement cart item
 exports.decrementCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield User_1.default.findOne({ email: req.body.email });
+        const { email, itemId } = req.body;
+        const user = yield User_1.default.findOne({ email: email });
         if (!user)
             throw new apiError_1.NotFoundError('The user does not exit.');
-        const cartItem = user.cart.find((item) => item._id.toString() === req.body.itemId);
+        const cartItem = user.cart.find((item) => item._id.toString() === itemId);
         if (!cartItem)
             throw new apiError_1.NotFoundError('The cart item does not exist.');
         const singlePrice = cartItem.price / cartItem.quantity;
@@ -216,10 +248,11 @@ exports.decrementCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0
 // DELETE delete a cart item
 exports.deleteCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield User_1.default.findOne({ email: req.body.email });
+        const { email, itemId } = req.body;
+        const user = yield User_1.default.findOne({ email: email });
         if (!user)
             throw new apiError_1.NotFoundError('The user does not exit.');
-        const cartItem = user.cart.find((item) => item._id.toString() === req.body.itemId);
+        const cartItem = user.cart.find((item) => item._id.toString() === itemId);
         if (!cartItem)
             throw new apiError_1.NotFoundError('The cart item does not exist.');
         const index = user.cart.indexOf(cartItem);
@@ -236,6 +269,7 @@ exports.deleteCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         }
     }
 });
+// ------------------------------------Listing Management -------------------------------------------------//
 // PATCH new listing item
 exports.addListing = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {

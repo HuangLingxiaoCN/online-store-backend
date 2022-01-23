@@ -14,6 +14,8 @@ import { BadRequestError, NotFoundError } from '../helpers/apiError'
 dotenv.config()
 const jwtKey: any = process.env.JWT_SECRET
 
+// ------------------------------------User Management -------------------------------------------------//
+
 // GET one user
 export const getUser = async (
   req: Request,
@@ -122,6 +124,8 @@ export const deleteUser = async (
   }
 }
 
+// ------------------------------------Cart Management -------------------------------------------------//
+
 // PATCH new cart item
 export const addCartItem = async (
   req: Request,
@@ -155,6 +159,41 @@ export const addCartItem = async (
   }
 }
 
+// Modify cart item's quantity
+export const modifyCartItem = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email, itemId, quantity } = req.body
+    const user = await User.findOne({ email: email })
+    if (!user) throw new NotFoundError('The user does not exit.')
+
+    const cartItem = user.cart.find((item) => item._id.toString() === itemId)
+    if (!cartItem) throw new NotFoundError('The cart item does not exist.')
+
+    // get the single price of product
+    const product = await Product.findOne({ name: cartItem.productName })
+    if (!product)
+      throw new NotFoundError(
+        'The product with the same cartItem name does not exit.'
+      )
+
+    cartItem.quantity = quantity
+    cartItem.price = quantity * product.price
+
+    await UserService.handleCartItem(user)
+    res.send(cartItem)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
 // PATCH Increment cart item
 export const incrementCartItem = async (
   req: Request,
@@ -162,12 +201,11 @@ export const incrementCartItem = async (
   next: NextFunction
 ) => {
   try {
-    const user = await User.findOne({ email: req.body.email })
+    const { email, itemId } = req.body
+    const user = await User.findOne({ email: email })
     if (!user) throw new NotFoundError('The user does not exit.')
 
-    const cartItem = user.cart.find(
-      (item) => item._id.toString() === req.body.itemId
-    )
+    const cartItem = user.cart.find((item) => item._id.toString() === itemId)
     if (!cartItem) throw new NotFoundError('The cart item does not exist.')
 
     const singlePrice = cartItem.price / cartItem.quantity
@@ -191,12 +229,11 @@ export const decrementCartItem = async (
   next: NextFunction
 ) => {
   try {
-    const user = await User.findOne({ email: req.body.email })
+    const { email, itemId } = req.body
+    const user = await User.findOne({ email: email })
     if (!user) throw new NotFoundError('The user does not exit.')
 
-    const cartItem = user.cart.find(
-      (item) => item._id.toString() === req.body.itemId
-    )
+    const cartItem = user.cart.find((item) => item._id.toString() === itemId)
     if (!cartItem) throw new NotFoundError('The cart item does not exist.')
 
     const singlePrice = cartItem.price / cartItem.quantity
@@ -220,12 +257,11 @@ export const deleteCartItem = async (
   next: NextFunction
 ) => {
   try {
-    const user = await User.findOne({ email: req.body.email })
+    const { email, itemId } = req.body
+    const user = await User.findOne({ email: email })
     if (!user) throw new NotFoundError('The user does not exit.')
 
-    const cartItem = user.cart.find(
-      (item) => item._id.toString() === req.body.itemId
-    )
+    const cartItem = user.cart.find((item) => item._id.toString() === itemId)
     if (!cartItem) throw new NotFoundError('The cart item does not exist.')
 
     const index = user.cart.indexOf(cartItem)
@@ -240,6 +276,8 @@ export const deleteCartItem = async (
     }
   }
 }
+
+// ------------------------------------Listing Management -------------------------------------------------//
 
 // PATCH new listing item
 export const addListing = async (

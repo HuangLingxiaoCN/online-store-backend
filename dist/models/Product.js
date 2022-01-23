@@ -13,7 +13,7 @@ exports.productSchema = new mongoose_1.default.Schema({
     name: String,
     price: {
         type: Number,
-        default: 1,
+        default: 0,
     },
     description: {
         type: String,

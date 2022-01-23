@@ -21,7 +21,7 @@ export const productSchema = new mongoose.Schema<ProductType>({
   name: String,
   price: {
     type: Number,
-    default: 1,
+    default: 0,
   },
   description: {
     type: String,

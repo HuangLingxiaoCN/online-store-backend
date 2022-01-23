@@ -5,6 +5,7 @@ import {
   getUser,
   registerUser,
   addCartItem,
+  modifyCartItem,
   incrementCartItem,
   decrementCartItem,
   deleteCartItem,
@@ -25,6 +26,7 @@ router.patch('/:userId', authorization, updateUser)
 router.delete('/:userId', authorization, deleteUser)
 
 router.patch('/cart/add', authorization, addCartItem)
+router.patch('/cart/modify', modifyCartItem)
 router.patch('/cart/increment', incrementCartItem)
 router.patch('/cart/decrement', decrementCartItem)
 router.patch('/cart/delete', deleteCartItem)
