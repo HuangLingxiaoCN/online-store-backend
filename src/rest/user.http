@@ -34,8 +34,7 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MDEwODQ2M
 
 {
   "email": "Jason@gmail.com",
-  "productName": "Silicon Power 256GB SSD 3D NAND A55 SLC Cache Performance Boost SATA III 2.5",
-  "quantity": 1
+  "productId": "61e4b81af187b721109e2080"
 }
 
 ###
@@ -44,9 +43,8 @@ content-type: application/json
 x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MDEwODQ2MzE3ZjAzODgxM2EiLCJpYXQiOjE2MzkzNDQ2MjN9.ueo0j79cn9ujx1U4bluESjckXfLU0ErFcV5UkZqoGXo
 
 {
-  "email": "Jason@gmail.com",
-  "productName": "Mens Cotton Jacket",
-  "quantity": 2
+  "email": "HuKai@gmail.com",
+  "productId": "61e4b7faf187b721109e203c"
 }
 
 ###

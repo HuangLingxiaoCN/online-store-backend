@@ -3,6 +3,7 @@ import mongoose, { Document } from 'mongoose'
 export type CartItemType = Document & {
   imageUrl: string
   productName: string
+  productId: mongoose.Schema.Types.ObjectId
   price: number
   quantity: number
 }
@@ -13,6 +14,7 @@ export const cartItemSchema = new mongoose.Schema<CartItemType>({
     default: '',
   },
   productName: String,
+  productId: mongoose.Schema.Types.ObjectId,
   price: Number,
   quantity: {
     type: Number,

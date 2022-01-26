@@ -139,24 +139,37 @@ exports.deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
 });
 // ------------------------------------Cart Management -------------------------------------------------//
 // PATCH new cart item
+// And if the cart item exists, plus one to the quantity
 exports.addCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { productName, email, quantity } = req.body;
-        const product = yield Product_1.default.findOne({ name: productName });
+        const { productId, email } = req.body;
+        const product = yield product_1.default.findById(productId);
         if (!product)
             throw new apiError_1.NotFoundError('The product does not exit.');
         const user = yield User_1.default.findOne({ email: email });
         if (!user)
             throw new apiError_1.NotFoundError('The user does not exit.');
-        const newItem = new CartItem_1.default({
-            imageUrl: product.imageUrl,
-            productName,
-            price: product.price * quantity,
-            quantity,
-        });
-        user.cart.push(newItem);
-        yield user_1.default.handleCartItem(user);
-        res.send(newItem);
+        // Find the cart item
+        const cartItem = user.cart.find((item) => item.productId.toString() == productId);
+        if (cartItem) {
+            const singlePrice = cartItem.price / cartItem.quantity;
+            cartItem.quantity++;
+            cartItem.price = cartItem.quantity * singlePrice;
+            yield user_1.default.handleCartItem(user);
+            res.send(cartItem);
+        }
+        else {
+            const newItem = new CartItem_1.default({
+                imageUrl: product.imageUrl,
+                productName: product.name,
+                productId,
+                price: product.price,
+                quantity: 1,
+            });
+            user.cart.push(newItem);
+            yield user_1.default.handleCartItem(user);
+            res.send(newItem);
+        }
     }
     catch (error) {
         if (error instanceof Error && error.name == 'ValidationError') {

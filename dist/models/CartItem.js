@@ -11,6 +11,7 @@ exports.cartItemSchema = new mongoose_1.default.Schema({
         default: '',
     },
     productName: String,
+    productId: mongoose_1.default.Schema.Types.ObjectId,
     price: Number,
     quantity: {
         type: Number,
