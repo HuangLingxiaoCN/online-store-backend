@@ -69,13 +69,14 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MzEwODQ2M
   "quantity": 10
 }
 
-### ---------------------------------- Increment, decrement and delete cart item --------------------------------
+### ---------------------------------- Modify, Increment, decrement and delete cart item --------------------------------
+###
 PATCH http://localhost:3000/api/user/cart/modify
 content-type: application/json
 
 {
-  "email": "Jason@gmail.com",
-  "itemId": "61ec20ed2e6b4500226133e0",
+  "email": "Rose@gmail.com",
+  "itemId": "620128ee70c5a40022acb1b4",
   "quantity": 5
 }
 

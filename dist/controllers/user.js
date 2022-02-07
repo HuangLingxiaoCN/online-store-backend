@@ -180,7 +180,7 @@ exports.addCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         }
     }
 });
-// Modify cart item's quantity
+// Modify one cart item's quantity
 exports.modifyCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, itemId, quantity } = req.body;

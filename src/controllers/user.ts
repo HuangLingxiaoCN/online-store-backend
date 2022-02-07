@@ -9,6 +9,7 @@ import UserService from '../services/user'
 import ProductService from '../services/product'
 import CartItem from '../models/CartItem'
 import Product, { ProductType } from '../models/Product'
+import { CartItemType } from '../models/CartItem'
 import { BadRequestError, NotFoundError } from '../helpers/apiError'
 
 dotenv.config()
@@ -174,7 +175,7 @@ export const addCartItem = async (
   }
 }
 
-// Modify cart item's quantity
+// Modify one cart item's quantity
 export const modifyCartItem = async (
   req: Request,
   res: Response,
