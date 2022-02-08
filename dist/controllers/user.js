@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateListing = exports.removeListing = exports.addListing = exports.deleteCartItem = exports.decrementCartItem = exports.incrementCartItem = exports.modifyCartItem = exports.addCartItem = exports.deleteUser = exports.registerUser = exports.updateUser = exports.getAll = exports.getUser = void 0;
+exports.updateListing = exports.removeListing = exports.addListing = exports.clearCartItems = exports.deleteCartItem = exports.decrementCartItem = exports.incrementCartItem = exports.modifyCartItem = exports.addCartItem = exports.deleteUser = exports.registerUser = exports.updateUser = exports.getAll = exports.getUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const jwt = __importStar(require("jsonwebtoken"));
@@ -272,6 +272,26 @@ exports.deleteCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         user.cart.splice(index, 1);
         yield user_1.default.handleCartItem(user);
         res.send(cartItem);
+    }
+    catch (error) {
+        if (error instanceof Error && error.name == 'ValidationError') {
+            next(new apiError_1.BadRequestError('Invalid Request', error));
+        }
+        else {
+            next(error);
+        }
+    }
+});
+// Clear ALL cart items
+exports.clearCartItems = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { email } = req.body;
+        const user = yield User_1.default.findOne({ email: email });
+        if (!user)
+            throw new apiError_1.NotFoundError('The user does not exit.');
+        user.cart = [];
+        yield user_1.default.handleCartItem(user);
+        res.send(user.cart);
     }
     catch (error) {
         if (error instanceof Error && error.name == 'ValidationError') {

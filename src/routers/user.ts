@@ -9,6 +9,7 @@ import {
   incrementCartItem,
   decrementCartItem,
   deleteCartItem,
+  clearCartItems,
   addListing,
   removeListing,
   updateListing,
@@ -30,6 +31,7 @@ router.patch('/cart/modify', modifyCartItem)
 router.patch('/cart/increment', incrementCartItem)
 router.patch('/cart/decrement', decrementCartItem)
 router.patch('/cart/delete', deleteCartItem)
+router.patch('/cart/clear', clearCartItems)
 
 router.patch('/listing/add', authorization, addListing)
 router.delete('/listing/delete', authorization, removeListing)

@@ -17,6 +17,7 @@ router.patch('/cart/modify', user_1.modifyCartItem);
 router.patch('/cart/increment', user_1.incrementCartItem);
 router.patch('/cart/decrement', user_1.decrementCartItem);
 router.patch('/cart/delete', user_1.deleteCartItem);
+router.patch('/cart/clear', user_1.clearCartItems);
 router.patch('/listing/add', authorization_1.default, user_1.addListing);
 router.delete('/listing/delete', authorization_1.default, user_1.removeListing);
 router.patch('/listing/update', authorization_1.default, user_1.updateListing);

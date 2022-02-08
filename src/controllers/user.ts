@@ -293,6 +293,29 @@ export const deleteCartItem = async (
   }
 }
 
+// Clear ALL cart items
+export const clearCartItems = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email } = req.body
+    const user = await User.findOne({ email: email })
+    if (!user) throw new NotFoundError('The user does not exit.')
+
+    user.cart = []
+    await UserService.handleCartItem(user)
+    res.send(user.cart)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
 // ------------------------------------Listing Management -------------------------------------------------//
 
 // PATCH new listing item
