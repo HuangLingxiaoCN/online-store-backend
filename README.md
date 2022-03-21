@@ -5,7 +5,7 @@
 ### 4. /api/user/listing/add, update, delete 5. /api/auth
 example: https://fierce-spring-store-backend.herokuapp.com/api/user <br /> https://fierce-spring-store-backend.herokuapp.com/api/products
 
-### A backend project that manages customers and their products with REST api and store the data in mongoDB Atlas. 
+### A backend project that manages customers and their products with REST api and store the data in mongoDB Atlas. It is hosted on Heroku
 
 ### The tech stacks in this project include: Express.js for REST api, mongoose for mongoDB, dotenv for environment variables configuration, bcrypt for password encryption, jwt(json web token) for authentication and authorization and Lodash for manipulating JavaScript array and object.
 
