@@ -47,7 +47,10 @@ exports.authenticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0,
         if (!user) {
             throw new apiError_1.BadRequestError('Login fails');
         }
-        const passwordIsValid = bcrypt_1.default.compare(password, user.password);
+        console.log(password);
+        console.log(bcrypt_1.default.compareSync(password, user.password));
+        // console.log(bcrypt.compare(password, user.password))
+        const passwordIsValid = bcrypt_1.default.compareSync(password, user.password);
         if (!passwordIsValid) {
             throw new apiError_1.BadRequestError('Login fails');
         }

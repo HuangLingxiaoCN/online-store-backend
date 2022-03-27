@@ -22,7 +22,11 @@ export const authenticateUser = async (
       throw new BadRequestError('Login fails')
     }
 
-    const passwordIsValid = bcrypt.compare(password, user.password)
+    console.log(password)
+    console.log(bcrypt.compareSync(password, user.password))
+    // console.log(bcrypt.compare(password, user.password)) is not correct
+
+    const passwordIsValid = bcrypt.compareSync(password, user.password)
     if (!passwordIsValid) {
       throw new BadRequestError('Login fails')
     }
