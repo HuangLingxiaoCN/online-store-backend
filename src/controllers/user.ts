@@ -325,9 +325,17 @@ export const addListing = async (
   next: NextFunction
 ) => {
   try {
-    const { product, email } = req.body
-    const { imageUrl, price, description, numberInStock, name, genre } = product
-    const user = await User.findOne({ email: email })
+    const { product } = req.body
+    const {
+      imageUrl,
+      price,
+      description,
+      numberInStock,
+      name,
+      genre,
+      ownerEmail,
+    } = product
+    const user = await User.findOne({ email: ownerEmail })
     if (!user) throw new NotFoundError('The user does not exit.')
 
     const newListing = new Product({
@@ -337,7 +345,7 @@ export const addListing = async (
       numberInStock,
       name,
       genre,
-      owner: user._id,
+      ownerEmail,
     })
 
     user.listings.push(newListing)

@@ -306,9 +306,9 @@ exports.clearCartItems = (req, res, next) => __awaiter(void 0, void 0, void 0, f
 // PATCH new listing item
 exports.addListing = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { product, email } = req.body;
-        const { imageUrl, price, description, numberInStock, name, genre } = product;
-        const user = yield User_1.default.findOne({ email: email });
+        const { product } = req.body;
+        const { imageUrl, price, description, numberInStock, name, genre, ownerEmail } = product;
+        const user = yield User_1.default.findOne({ email: ownerEmail });
         if (!user)
             throw new apiError_1.NotFoundError('The user does not exit.');
         const newListing = new Product_1.default({
@@ -318,7 +318,7 @@ exports.addListing = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
             numberInStock,
             name,
             genre,
-            owner: user._id,
+            ownerEmail,
         });
         user.listings.push(newListing);
         yield user_1.default.handleListing(user);

@@ -127,9 +127,9 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI2Njk4MzEwODQ2M
     "price": 1600,
     "description": "best lightweight laptop of Asus",
     "numberInStock": 1,
-    "genre": "electronic"
-  },
-  "email": "Jason@gmail.com"
+    "genre": "electronic",
+    "ownerEmail": "Jason@gmail.com"
+  }
 }
 
 ###
