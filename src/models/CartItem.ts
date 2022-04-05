@@ -6,6 +6,7 @@ export type CartItemType = Document & {
   productId: mongoose.Schema.Types.ObjectId
   price: number
   quantity: number
+  ownerEmail: string
 }
 
 export const cartItemSchema = new mongoose.Schema<CartItemType>({
@@ -20,6 +21,7 @@ export const cartItemSchema = new mongoose.Schema<CartItemType>({
     type: Number,
     default: 1,
   },
+  ownerEmail: String,
 })
 
 export default mongoose.model('CartItem', cartItemSchema)

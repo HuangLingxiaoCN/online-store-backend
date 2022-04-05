@@ -38,4 +38,4 @@ export const productSchema = new mongoose.Schema<ProductType>({
   ownerEmail: String,
 })
 
-export default mongoose.model<ProductType>('Product', productSchema)
+export default mongoose.model('Product', productSchema)

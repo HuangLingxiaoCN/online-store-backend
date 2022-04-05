@@ -165,6 +165,7 @@ exports.addCartItem = (req, res, next) => __awaiter(void 0, void 0, void 0, func
                 productId,
                 price: product.price,
                 quantity: 1,
+                ownerEmail: product.ownerEmail,
             });
             user.cart.push(newItem);
             yield user_1.default.handleCartItem(user);
@@ -307,7 +308,7 @@ exports.clearCartItems = (req, res, next) => __awaiter(void 0, void 0, void 0, f
 exports.addListing = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { product } = req.body;
-        const { imageUrl, price, description, numberInStock, name, genre, ownerEmail } = product;
+        const { imageUrl, price, description, numberInStock, name, genre, ownerEmail, } = product;
         const user = yield User_1.default.findOne({ email: ownerEmail });
         if (!user)
             throw new apiError_1.NotFoundError('The user does not exit.');

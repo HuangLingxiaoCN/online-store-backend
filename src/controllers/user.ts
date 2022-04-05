@@ -160,6 +160,7 @@ export const addCartItem = async (
         productId,
         price: product.price,
         quantity: 1,
+        ownerEmail: product.ownerEmail,
       })
 
       user.cart.push(newItem)
