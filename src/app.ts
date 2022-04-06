@@ -8,6 +8,7 @@ import cors from 'cors'
 
 import productRouter from './routers/product'
 import userRouter from './routers/user'
+import orderRouter from './routers/order'
 import auth from './routers/auth'
 
 dotenv.config()
@@ -30,6 +31,7 @@ app.use(lusca.xssProtection(true))
 
 app.use('/api/products', productRouter)
 app.use('/api/user', userRouter)
+app.use('/api/orders', orderRouter)
 app.use('/api/auth', auth)
 
 // Custom API error handler

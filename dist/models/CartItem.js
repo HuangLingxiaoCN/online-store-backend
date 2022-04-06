@@ -17,7 +17,7 @@ exports.cartItemSchema = new mongoose_1.default.Schema({
         type: Number,
         default: 1,
     },
-    ownerEmail: String
+    ownerEmail: String,
 });
 exports.default = mongoose_1.default.model('CartItem', exports.cartItemSchema);
 //# sourceMappingURL=CartItem.js.map

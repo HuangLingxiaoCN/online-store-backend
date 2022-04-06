@@ -105,7 +105,7 @@ exports.registerUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         // bcrypt
         const salt = yield bcrypt_1.default.genSalt(10);
         user.password = yield bcrypt_1.default.hash(password, salt);
-        yield user_1.default.register(user);
+        yield user_1.default.saveUser(user);
         const token = jwt.sign({ _id: user._id }, jwtKey);
         res
             .header('x-auth-token', token)

@@ -31,7 +31,7 @@ const updateUser = (userId, update) => __awaiter(void 0, void 0, void 0, functio
         throw new apiError_1.NotFoundError(`User ${userId} not found`);
     return foundUser;
 });
-const register = (User) => __awaiter(void 0, void 0, void 0, function* () {
+const saveUser = (User) => __awaiter(void 0, void 0, void 0, function* () {
     return User.save();
 });
 const deleteUser = (userId) => __awaiter(void 0, void 0, void 0, function* () {
@@ -49,7 +49,7 @@ const handleListing = (User) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.default = {
     getUser,
-    register,
+    saveUser,
     handleCartItem,
     handleListing,
     getAll,

@@ -14,7 +14,8 @@ export type UserType = Document & {
   password: string
   cart: CartItemType[]
   listings: ProductType[]
-  // orders
+  // orders reference
+  orders: Array<string>
 }
 
 const userSchema = new mongoose.Schema<UserType>({
@@ -39,6 +40,7 @@ const userSchema = new mongoose.Schema<UserType>({
   },
   cart: [cartItemSchema],
   listings: [productSchema],
+  orders: [String],
 })
 
 userSchema.methods.generateAuthToken = function () {

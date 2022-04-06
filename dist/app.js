@@ -12,6 +12,7 @@ const compression_1 = __importDefault(require("compression"));
 const cors_1 = __importDefault(require("cors"));
 const product_1 = __importDefault(require("./routers/product"));
 const user_1 = __importDefault(require("./routers/user"));
+const order_1 = __importDefault(require("./routers/order"));
 const auth_1 = __importDefault(require("./routers/auth"));
 dotenv_1.default.config();
 const app = express_1.default();
@@ -30,6 +31,7 @@ app.use(lusca_1.default.xframe('SAMEORIGIN'));
 app.use(lusca_1.default.xssProtection(true));
 app.use('/api/products', product_1.default);
 app.use('/api/user', user_1.default);
+app.use('/api/orders', order_1.default);
 app.use('/api/auth', auth_1.default);
 // Custom API error handler
 app.use(apiErrorHandler_1.default);

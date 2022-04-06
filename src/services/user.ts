@@ -24,7 +24,7 @@ const updateUser = async (
   return foundUser
 }
 
-const register = async (User: UserType): Promise<UserType> => {
+const saveUser = async (User: UserType): Promise<UserType> => {
   return User.save()
 }
 
@@ -46,7 +46,7 @@ const handleListing = async (User: UserType): Promise<UserType> => {
 
 export default {
   getUser,
-  register,
+  saveUser,
   handleCartItem,
   handleListing,
   getAll,

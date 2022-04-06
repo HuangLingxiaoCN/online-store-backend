@@ -91,7 +91,7 @@ export const registerUser = async (
     const salt = await bcrypt.genSalt(10)
     user.password = await bcrypt.hash(password, salt)
 
-    await UserService.register(user)
+    await UserService.saveUser(user)
     const token = jwt.sign({ _id: user._id }, jwtKey)
     res
       .header('x-auth-token', token)

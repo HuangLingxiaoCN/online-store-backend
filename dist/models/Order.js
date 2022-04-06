@@ -9,7 +9,7 @@ const orderSchema = new mongoose_1.default.Schema({
     totalPrice: Number,
     timestamp: String,
     customerEmail: String,
-    purchasedItems: [CartItem_1.cartItemSchema]
+    purchasedItems: [CartItem_1.cartItemSchema],
 });
 exports.default = mongoose_1.default.model('Order', orderSchema);
 //# sourceMappingURL=Order.js.map

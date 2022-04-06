@@ -16,4 +16,4 @@ const orderSchema = new mongoose.Schema<OrderType>({
   purchasedItems: [cartItemSchema],
 })
 
-export default mongoose.model('Order', orderSchema)
+export default mongoose.model<OrderType>('Order', orderSchema)
