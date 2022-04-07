@@ -14,7 +14,16 @@ content-type: application/json
       "price": 200,
       "ownerEmail": "Rose@gmail.com"
     }
-  ]
+  ],
+  "billingInfo": {
+    "fullName": "Huang Lingxiao",
+    "country": "Finland",
+    "streetAddress": "Fake street 123",
+    "phoneNumber": "555-555-555",
+    "postalCode": "114514",
+    "city": "Helsinki",
+    "paymentMethod": "PayPal"
+  }
 }
 
 ###
@@ -34,7 +43,16 @@ content-type: application/json
       "price": 200,
       "ownerEmail": "Rose@gmail.com"
     }
-  ]
+  ],
+  "billingInfo": {
+    "fullName": "Hu Kai",
+    "country": "Finland",
+    "streetAddress": "Fake street 123",
+    "phoneNumber": "114-514-1919810",
+    "postalCode": "114514",
+    "city": "Helsinki",
+    "paymentMethod": "Google Pay"
+  }
 }
 
 ###

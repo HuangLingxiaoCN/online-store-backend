@@ -10,6 +10,15 @@ const orderSchema = new mongoose_1.default.Schema({
     timestamp: String,
     customerEmail: String,
     purchasedItems: [CartItem_1.cartItemSchema],
+    billingInfo: {
+        fullName: String,
+        country: String,
+        streetAddress: String,
+        phoneNumber: String,
+        postalCode: String,
+        city: String,
+        paymentMethod: String
+    }
 });
 exports.default = mongoose_1.default.model('Order', orderSchema);
 //# sourceMappingURL=Order.js.map

@@ -16,11 +16,8 @@ export const findOrdersByCustomerEmail = async (
     const { customerEmail } = request.body
     const foundOrders = await OrderService.findOrdersByEmail(customerEmail)
 
-    // if(!foundOrders) {
-    //   throw new NotFoundError(`Orders with ${customerEmail} not found`)
-    // }
     if (!foundOrders) {
-      response.send('not found')
+      throw new NotFoundError(`Orders with ${customerEmail} not found`)
     }
 
     response.status(200).json(foundOrders)
@@ -40,14 +37,20 @@ export const createOrder = async (
   next: NextFunction
 ) => {
   try {
-    const { totalPrice, timestamp, customerEmail, purchasedItems } =
-      request.body
+    const {
+      totalPrice,
+      timestamp,
+      customerEmail,
+      purchasedItems,
+      billingInfo,
+    } = request.body
 
     const newOrder = new Order({
       totalPrice,
       timestamp,
       customerEmail,
       purchasedItems,
+      billingInfo,
     })
 
     // Also need to add the order to user collections

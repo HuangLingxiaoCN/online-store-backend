@@ -51,7 +51,7 @@ const userSchema = new mongoose_1.default.Schema({
     },
     cart: [CartItem_1.cartItemSchema],
     listings: [Product_1.productSchema],
-    orders: [String]
+    orders: [String],
 });
 userSchema.methods.generateAuthToken = function () {
     const token = jwt.sign({ _id: this._id }, jwtKey);

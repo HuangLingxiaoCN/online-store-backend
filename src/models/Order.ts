@@ -7,6 +7,15 @@ export type OrderType = Document & {
   timestamp: string
   customerEmail: string
   purchasedItems: CartItemType[]
+  billingInfo: {
+    fullName: string
+    country: string
+    streetAddress: string
+    phoneNumber: string
+    postalCode: string
+    city: string
+    paymentMethod: string
+  }
 }
 
 const orderSchema = new mongoose.Schema<OrderType>({
@@ -14,6 +23,15 @@ const orderSchema = new mongoose.Schema<OrderType>({
   timestamp: String,
   customerEmail: String,
   purchasedItems: [cartItemSchema],
+  billingInfo: {
+    fullName: String,
+    country: String,
+    streetAddress: String,
+    phoneNumber: String,
+    postalCode: String,
+    city: String,
+    paymentMethod: String,
+  },
 })
 
 export default mongoose.model<OrderType>('Order', orderSchema)

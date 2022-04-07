@@ -23,11 +23,8 @@ exports.findOrdersByCustomerEmail = (request, response, next) => __awaiter(void 
     try {
         const { customerEmail } = request.body;
         const foundOrders = yield order_1.default.findOrdersByEmail(customerEmail);
-        // if(!foundOrders) {
-        //   throw new NotFoundError(`Orders with ${customerEmail} not found`)
-        // }
         if (!foundOrders) {
-            response.send('not found');
+            throw new apiError_1.NotFoundError(`Orders with ${customerEmail} not found`);
         }
         response.status(200).json(foundOrders);
     }
@@ -43,12 +40,13 @@ exports.findOrdersByCustomerEmail = (request, response, next) => __awaiter(void 
 // Create an order
 exports.createOrder = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { totalPrice, timestamp, customerEmail, purchasedItems } = request.body;
+        const { totalPrice, timestamp, customerEmail, purchasedItems, billingInfo } = request.body;
         const newOrder = new Order_1.default({
             totalPrice,
             timestamp,
             customerEmail,
-            purchasedItems
+            purchasedItems,
+            billingInfo
         });
         // Also need to add the order to user collections
         const user = yield User_1.default.findOne({ email: customerEmail });
