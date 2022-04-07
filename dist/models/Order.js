@@ -17,8 +17,8 @@ const orderSchema = new mongoose_1.default.Schema({
         phoneNumber: String,
         postalCode: String,
         city: String,
-        paymentMethod: String
-    }
+        paymentMethod: String,
+    },
 });
 exports.default = mongoose_1.default.model('Order', orderSchema);
 //# sourceMappingURL=Order.js.map

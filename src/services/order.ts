@@ -25,8 +25,13 @@ const findOrderById = async (orderId: string) => {
   return foundOrder
 }
 
+const deleteOrderById = async (orderId: string) => {
+  await Order.findByIdAndDelete(orderId)
+}
+
 export default {
   createOrder,
   findOrdersByEmail,
   findOrderById,
+  deleteOrderById,
 }

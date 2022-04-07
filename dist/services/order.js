@@ -31,9 +31,13 @@ const findOrderById = (orderId) => __awaiter(void 0, void 0, void 0, function* (
     }
     return foundOrder;
 });
+const deleteOrderById = (orderId) => __awaiter(void 0, void 0, void 0, function* () {
+    yield Order_1.default.findByIdAndDelete(orderId);
+});
 exports.default = {
     createOrder,
     findOrdersByEmail,
     findOrderById,
+    deleteOrderById
 };
 //# sourceMappingURL=order.js.map

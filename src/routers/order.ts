@@ -1,10 +1,15 @@
 import express from 'express'
 
-import { findOrdersByCustomerEmail, createOrder } from '../controllers/order'
+import {
+  findOrdersByCustomerEmail,
+  createOrder,
+  deleteOrder,
+} from '../controllers/order'
 
 const router = express.Router()
 
 router.post('/createOrder', createOrder)
-router.get('/getOrders', findOrdersByCustomerEmail)
+router.get('/getOrders/:customerEmail', findOrdersByCustomerEmail)
+router.delete('/deleteOrder', deleteOrder)
 
 export default router

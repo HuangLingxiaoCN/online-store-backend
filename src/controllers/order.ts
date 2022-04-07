@@ -13,7 +13,7 @@ export const findOrdersByCustomerEmail = async (
   next: NextFunction
 ) => {
   try {
-    const { customerEmail } = request.body
+    const { customerEmail } = request.params
     const foundOrders = await OrderService.findOrdersByEmail(customerEmail)
 
     if (!foundOrders) {
@@ -65,6 +65,38 @@ export const createOrder = async (
     await UserService.saveUser(user)
     await OrderService.createOrder(newOrder)
     response.json(newOrder)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+export const deleteOrder = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const { orderId } = request.body
+
+    const foundOrder = await OrderService.findOrderById(orderId)
+    if (!foundOrder) {
+      throw new NotFoundError('The order ' + foundOrder + ' does not exist')
+    }
+
+    // Also delete the order element in user orders array
+    const customer = await User.findOne({ email: foundOrder.customerEmail })
+    if (!customer) {
+      throw new NotFoundError('The customer does not exist')
+    }
+    customer.orders.splice(customer.orders.indexOf(orderId), 1)
+
+    await OrderService.deleteOrderById(orderId)
+    await UserService.saveUser(customer)
+    response.status(200).json(orderId)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
