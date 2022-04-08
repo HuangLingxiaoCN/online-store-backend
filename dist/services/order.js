@@ -38,6 +38,6 @@ exports.default = {
     createOrder,
     findOrdersByEmail,
     findOrderById,
-    deleteOrderById
+    deleteOrderById,
 };
 //# sourceMappingURL=order.js.map

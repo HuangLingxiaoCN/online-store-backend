@@ -53,6 +53,8 @@ exports.createOrder = (request, response, next) => __awaiter(void 0, void 0, voi
         if (!user) {
             throw new apiError_1.NotFoundError('The user with email ' + customerEmail + ' does not exist');
         }
+        // After creating an order, the cart will also have to be cleared
+        user.cart = [];
         user.orders.push(newOrder._id);
         yield user_1.default.saveUser(user);
         yield order_1.default.createOrder(newOrder);

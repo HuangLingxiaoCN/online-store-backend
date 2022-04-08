@@ -61,6 +61,9 @@ export const createOrder = async (
       )
     }
 
+    // After creating an order, the cart will also have to be cleared
+    user.cart = []
+
     user.orders.push(newOrder._id)
     await UserService.saveUser(user)
     await OrderService.createOrder(newOrder)
