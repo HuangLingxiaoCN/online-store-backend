@@ -23,3 +23,30 @@ content-type: application/json
   "email": "HuKai@gmail.com",
   "password": "HuKaipassword"
 }
+
+###
+POST http://localhost:3000/api/auth/isAdmin
+content-type: application/json
+
+{
+  "email": "Jason@gmail.com",
+  "password": "Jasonpassword"
+}
+
+###
+POST http://localhost:3000/api/auth/isAdmin
+content-type: application/json
+
+{
+  "email": "HuKai@gmail.com",
+  "password": "HuKaipassword"
+}
+
+###
+POST http://localhost:3000/api/auth/isAdmin
+content-type: application/json
+
+{
+  "email": "Kyle@gmail.com",
+  "password": "Kylepassword"
+}

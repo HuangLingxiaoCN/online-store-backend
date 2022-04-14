@@ -14,8 +14,8 @@ export type UserType = Document & {
   password: string
   cart: CartItemType[]
   listings: ProductType[]
-  // orders reference
   orders: Array<string>
+  isAdmin: boolean
 }
 
 const userSchema = new mongoose.Schema<UserType>({
@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema<UserType>({
   cart: [cartItemSchema],
   listings: [productSchema],
   orders: [String],
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 userSchema.methods.generateAuthToken = function () {

@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authenticateUser = void 0;
+exports.isAdmin = exports.authenticateUser = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jwt = __importStar(require("jsonwebtoken"));
@@ -45,17 +45,44 @@ exports.authenticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0,
         const { email, password } = req.body;
         const user = yield User_1.default.findOne({ email: email });
         if (!user) {
-            throw new apiError_1.BadRequestError('Login fails');
+            throw new apiError_1.UnauthorizedError('Login fails');
         }
         console.log(password);
         console.log(bcrypt_1.default.compareSync(password, user.password));
         // console.log(bcrypt.compare(password, user.password)) is not correct
         const passwordIsValid = bcrypt_1.default.compareSync(password, user.password);
         if (!passwordIsValid) {
-            throw new apiError_1.BadRequestError('Login fails');
+            throw new apiError_1.UnauthorizedError('Login fails');
         }
         const token = jwt.sign({ _id: user._id }, jwtKey);
         res.status(200).send(token);
+    }
+    catch (error) {
+        if (error instanceof Error && error.name == 'ValidationError') {
+            next(new apiError_1.BadRequestError('Invalid Request', error));
+        }
+        else {
+            next(error);
+        }
+    }
+});
+// isAdmin
+exports.isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { email, password } = req.body;
+        const user = yield User_1.default.findOne({ email: email });
+        if (!user) {
+            throw new apiError_1.UnauthorizedError('Login fails');
+        }
+        const passwordIsValid = bcrypt_1.default.compareSync(password, user.password);
+        if (!passwordIsValid) {
+            throw new apiError_1.UnauthorizedError('Login fails');
+        }
+        // check if the user's isAdmin property
+        if (!user.isAdmin) {
+            throw new apiError_1.ForbiddenError('Access Denied');
+        }
+        res.status(200).send('Access granted');
     }
     catch (error) {
         if (error instanceof Error && error.name == 'ValidationError') {
