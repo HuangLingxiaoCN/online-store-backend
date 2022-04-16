@@ -10,14 +10,18 @@ import ProductService from '../services/product'
 import CartItem from '../models/CartItem'
 import Product, { ProductType } from '../models/Product'
 import { CartItemType } from '../models/CartItem'
-import { BadRequestError, NotFoundError } from '../helpers/apiError'
+import {
+  BadRequestError,
+  NotFoundError,
+  ForbiddenError,
+} from '../helpers/apiError'
 
 dotenv.config()
 const jwtKey: any = process.env.JWT_SECRET
 
 // ------------------------------------User Management -------------------------------------------------//
 
-// GET one user
+// GET the user
 export const getUser = async (
   req: Request,
   res: Response,
@@ -116,6 +120,37 @@ export const deleteUser = async (
     const userId = req.params.userId
     const deletedUser = await UserService.deleteUser(userId)
     res.status(200).send(deletedUser)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// Toggle suspension of user account
+export const ToggleUserSuspension = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { adminEmail, targetEmail } = req.body
+    const administrator = await User.findOne({ email: adminEmail })
+    if (!administrator)
+      throw new NotFoundError('The administrator does not exit.')
+    if (!administrator.isAdmin) {
+      throw new ForbiddenError(
+        'The operation is only allowed for administrator'
+      )
+    }
+
+    const toggledUser = await User.findOne({ email: targetEmail })
+    if (!toggledUser) throw new NotFoundError('The user does not exit.')
+    toggledUser.isSuspended = !toggledUser.isSuspended
+    await UserService.saveUser(toggledUser)
+    res.status(200).send(toggledUser)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

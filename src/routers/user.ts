@@ -16,6 +16,7 @@ import {
   getAll,
   updateUser,
   deleteUser,
+  ToggleUserSuspension,
 } from '../controllers/user'
 
 const router = express.Router()
@@ -25,6 +26,7 @@ router.get('/', getAll)
 router.post('/', registerUser)
 router.patch('/:userId', authorization, updateUser)
 router.delete('/:userId', authorization, deleteUser)
+router.post('/suspend', authorization, ToggleUserSuspension)
 
 router.patch('/cart/add', authorization, addCartItem)
 router.patch('/cart/modify', modifyCartItem)

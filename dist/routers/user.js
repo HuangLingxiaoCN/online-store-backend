@@ -12,6 +12,7 @@ router.get('/', user_1.getAll);
 router.post('/', user_1.registerUser);
 router.patch('/:userId', authorization_1.default, user_1.updateUser);
 router.delete('/:userId', authorization_1.default, user_1.deleteUser);
+router.post('/suspend', authorization_1.default, user_1.ToggleUserSuspension);
 router.patch('/cart/add', authorization_1.default, user_1.addCartItem);
 router.patch('/cart/modify', user_1.modifyCartItem);
 router.patch('/cart/increment', user_1.incrementCartItem);

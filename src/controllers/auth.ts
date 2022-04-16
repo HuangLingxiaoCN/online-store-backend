@@ -25,6 +25,11 @@ export const authenticateUser = async (
     if (!user) {
       throw new UnauthorizedError('Login fails')
     }
+    if (user.isSuspended) {
+      throw new ForbiddenError(
+        'Account suspended. Please contact the administrator'
+      )
+    }
 
     console.log(password)
     console.log(bcrypt.compareSync(password, user.password))

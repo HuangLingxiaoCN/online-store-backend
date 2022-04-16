@@ -47,6 +47,9 @@ exports.authenticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0,
         if (!user) {
             throw new apiError_1.UnauthorizedError('Login fails');
         }
+        if (user.isSuspended) {
+            throw new apiError_1.ForbiddenError('Account suspended. Please contact the administrator');
+        }
         console.log(password);
         console.log(bcrypt_1.default.compareSync(password, user.password));
         // console.log(bcrypt.compare(password, user.password)) is not correct

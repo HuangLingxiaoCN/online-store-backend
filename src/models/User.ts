@@ -16,6 +16,7 @@ export type UserType = Document & {
   listings: ProductType[]
   orders: Array<string>
   isAdmin: boolean
+  isSuspended: boolean
 }
 
 const userSchema = new mongoose.Schema<UserType>({
@@ -42,6 +43,10 @@ const userSchema = new mongoose.Schema<UserType>({
   listings: [productSchema],
   orders: [String],
   isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  isSuspended: {
     type: Boolean,
     default: false,
   },

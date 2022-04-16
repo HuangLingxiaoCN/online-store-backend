@@ -1,4 +1,6 @@
+// Get all users
 GET http://localhost:3000/api/user
+
 
 ###
 POST http://localhost:3000/api/user
@@ -25,6 +27,17 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE5Mzc3OTZiYjg0O
 
 {
   "email": "HuKai@outlook.com"
+}
+
+// Toggle user suspension
+###
+POST http://localhost:3000/api/user/suspend
+content-type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWU0YjdmMmYxODdiNzIxMTA5ZTIwMmYiLCJpYXQiOjE2NTAxMTQ5MTR9.DQEaScbJR8Q6cF7eMzlmJJ2vyDIE51B0JhE76-5WPcM
+
+{
+  "adminEmail": "Jason@gmail.com",
+  "targetEmail": "Kyle@gmail.com"
 }
 
 ### ------------------------------------------ add cart items -----------------------------------------------------

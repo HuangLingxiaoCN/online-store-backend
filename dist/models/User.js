@@ -54,7 +54,11 @@ const userSchema = new mongoose_1.default.Schema({
     orders: [String],
     isAdmin: {
         type: Boolean,
-        default: false
+        default: false,
+    },
+    isSuspended: {
+        type: Boolean,
+        default: false,
     }
 });
 userSchema.methods.generateAuthToken = function () {

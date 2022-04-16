@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateListing = exports.removeListing = exports.addListing = exports.clearCartItems = exports.deleteCartItem = exports.decrementCartItem = exports.incrementCartItem = exports.modifyCartItem = exports.addCartItem = exports.deleteUser = exports.registerUser = exports.updateUser = exports.getAll = exports.getUser = void 0;
+exports.updateListing = exports.removeListing = exports.addListing = exports.clearCartItems = exports.deleteCartItem = exports.decrementCartItem = exports.incrementCartItem = exports.modifyCartItem = exports.addCartItem = exports.ToggleUserSuspension = exports.deleteUser = exports.registerUser = exports.updateUser = exports.getAll = exports.getUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const jwt = __importStar(require("jsonwebtoken"));
@@ -45,7 +45,7 @@ const apiError_1 = require("../helpers/apiError");
 dotenv_1.default.config();
 const jwtKey = process.env.JWT_SECRET;
 // ------------------------------------User Management -------------------------------------------------//
-// GET one user
+// GET the user
 exports.getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //
@@ -127,6 +127,32 @@ exports.deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         const userId = req.params.userId;
         const deletedUser = yield user_1.default.deleteUser(userId);
         res.status(200).send(deletedUser);
+    }
+    catch (error) {
+        if (error instanceof Error && error.name == 'ValidationError') {
+            next(new apiError_1.BadRequestError('Invalid Request', error));
+        }
+        else {
+            next(error);
+        }
+    }
+});
+// Toggle suspension of user account
+exports.ToggleUserSuspension = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { adminEmail, targetEmail } = req.body;
+        const administrator = yield User_1.default.findOne({ email: adminEmail });
+        if (!administrator)
+            throw new apiError_1.NotFoundError('The administrator does not exit.');
+        if (!administrator.isAdmin) {
+            throw new apiError_1.ForbiddenError('The operation is only allowed for administrator');
+        }
+        const toggledUser = yield User_1.default.findOne({ email: targetEmail });
+        if (!toggledUser)
+            throw new apiError_1.NotFoundError('The user does not exit.');
+        toggledUser.isSuspended = !toggledUser.isSuspended;
+        yield user_1.default.saveUser(toggledUser);
+        res.status(200).send(toggledUser);
     }
     catch (error) {
         if (error instanceof Error && error.name == 'ValidationError') {
