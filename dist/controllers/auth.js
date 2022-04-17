@@ -45,17 +45,17 @@ exports.authenticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0,
         const { email, password } = req.body;
         const user = yield User_1.default.findOne({ email: email });
         if (!user) {
-            throw new apiError_1.UnauthorizedError('Login fails');
-        }
-        if (user.isSuspended) {
-            throw new apiError_1.ForbiddenError('Account suspended. Please contact the administrator');
+            throw new apiError_1.NotFoundError('The account does not exist');
         }
         console.log(password);
         console.log(bcrypt_1.default.compareSync(password, user.password));
         // console.log(bcrypt.compare(password, user.password)) is not correct
         const passwordIsValid = bcrypt_1.default.compareSync(password, user.password);
         if (!passwordIsValid) {
-            throw new apiError_1.UnauthorizedError('Login fails');
+            throw new apiError_1.UnauthorizedError('Login fails. Please check you email or password');
+        }
+        if (user.isSuspended) {
+            throw new apiError_1.ForbiddenError('Account suspended. Please contact the administrator');
         }
         const token = jwt.sign({ _id: user._id }, jwtKey);
         res.status(200).send(token);

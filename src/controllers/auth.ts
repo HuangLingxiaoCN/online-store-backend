@@ -8,6 +8,7 @@ import {
   UnauthorizedError,
   BadRequestError,
   ForbiddenError,
+  NotFoundError,
 } from '../helpers/apiError'
 
 dotenv.config()
@@ -23,12 +24,7 @@ export const authenticateUser = async (
     const { email, password } = req.body
     const user = await User.findOne({ email: email })
     if (!user) {
-      throw new UnauthorizedError('Login fails')
-    }
-    if (user.isSuspended) {
-      throw new ForbiddenError(
-        'Account suspended. Please contact the administrator'
-      )
+      throw new NotFoundError('The account does not exist')
     }
 
     console.log(password)
@@ -37,7 +33,15 @@ export const authenticateUser = async (
 
     const passwordIsValid = bcrypt.compareSync(password, user.password)
     if (!passwordIsValid) {
-      throw new UnauthorizedError('Login fails')
+      throw new UnauthorizedError(
+        'Login fails. Please check you email or password'
+      )
+    }
+
+    if (user.isSuspended) {
+      throw new ForbiddenError(
+        'Account suspended. Please contact the administrator'
+      )
     }
 
     const token = jwt.sign({ _id: user._id }, jwtKey)
