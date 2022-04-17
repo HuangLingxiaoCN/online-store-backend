@@ -150,7 +150,8 @@ export const ToggleUserSuspension = async (
     if (!toggledUser) throw new NotFoundError('The user does not exit.')
     toggledUser.isSuspended = !toggledUser.isSuspended
     await UserService.saveUser(toggledUser)
-    res.status(200).send(toggledUser)
+    const allUsers = await UserService.getAll()
+    res.status(200).send(allUsers)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

@@ -86,7 +86,6 @@ exports.isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function
             throw new apiError_1.ForbiddenError('Access Denied');
         }
         const token = jwt.sign({ _id: user._id, isAdmin: true }, jwtKey);
-        console.log(token);
         res.status(200).send(token);
     }
     catch (error) {

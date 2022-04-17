@@ -29,11 +29,11 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE5Mzc3OTZiYjg0O
   "email": "HuKai@outlook.com"
 }
 
-// Toggle user suspension
+// ---------------------------------------- Toggle user suspension -----------------------------------------------
 ###
 POST http://localhost:3000/api/user/suspend
 content-type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWU0YjdmMmYxODdiNzIxMTA5ZTIwMmYiLCJpYXQiOjE2NTAxMTQ5MTR9.DQEaScbJR8Q6cF7eMzlmJJ2vyDIE51B0JhE76-5WPcM
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWU0YjdmMmYxODdiNzIxMTA5ZTIwMmYiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTAyMzMzMjJ9.Imd40Xtq_vc_hRqzraKc4brdf92y5ZAS6gpBmzM0YTI
 
 {
   "adminEmail": "Jason@gmail.com",

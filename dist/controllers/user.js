@@ -152,7 +152,8 @@ exports.ToggleUserSuspension = (req, res, next) => __awaiter(void 0, void 0, voi
             throw new apiError_1.NotFoundError('The user does not exit.');
         toggledUser.isSuspended = !toggledUser.isSuspended;
         yield user_1.default.saveUser(toggledUser);
-        res.status(200).send(toggledUser);
+        const allUsers = yield user_1.default.getAll();
+        res.status(200).send(allUsers);
     }
     catch (error) {
         if (error instanceof Error && error.name == 'ValidationError') {
