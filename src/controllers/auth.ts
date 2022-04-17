@@ -75,7 +75,9 @@ export const isAdmin = async (
       throw new ForbiddenError('Access Denied')
     }
 
-    res.status(200).send('Access granted')
+    const token = jwt.sign({ _id: user._id, isAdmin: true }, jwtKey)
+
+    res.status(200).send(token)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

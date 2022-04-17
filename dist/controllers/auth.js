@@ -85,7 +85,9 @@ exports.isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         if (!user.isAdmin) {
             throw new apiError_1.ForbiddenError('Access Denied');
         }
-        res.status(200).send('Access granted');
+        const token = jwt.sign({ _id: user._id, isAdmin: true }, jwtKey);
+        console.log(token);
+        res.status(200).send(token);
     }
     catch (error) {
         if (error instanceof Error && error.name == 'ValidationError') {
