@@ -86,6 +86,9 @@ exports.updateProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
 exports.deleteProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const foundProduct = yield product_1.default.deleteProduct(req.params.productId);
+        if (!foundProduct) {
+            throw new apiError_1.NotFoundError('The product does not exist');
+        }
         res.status(200).json(foundProduct);
     }
     catch (error) {

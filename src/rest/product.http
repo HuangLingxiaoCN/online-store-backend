@@ -69,3 +69,4 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:3000/api/products/61a7e70668794f46605862a0
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWU0YjdmMmYxODdiNzIxMTA5ZTIwMmYiLCJpYXQiOjE2NTAzNjM1MjZ9.M5X_hGIU9hr2wjYg2212For0lNHiMt1fHEJf6duaoks

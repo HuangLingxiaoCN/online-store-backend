@@ -100,6 +100,9 @@ export const deleteProduct = async (
     const foundProduct = await ProductService.deleteProduct(
       req.params.productId
     )
+    if (!foundProduct) {
+      throw new NotFoundError('The product does not exist')
+    }
 
     res.status(200).json(foundProduct)
   } catch (error) {
