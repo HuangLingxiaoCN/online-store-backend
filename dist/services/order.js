@@ -17,6 +17,9 @@ const Order_1 = __importDefault(require("../models/Order"));
 const createOrder = (order) => __awaiter(void 0, void 0, void 0, function* () {
     return order.save();
 });
+const getAllOrders = () => __awaiter(void 0, void 0, void 0, function* () {
+    return Order_1.default.find();
+});
 const findOrdersByEmail = (customerEmail) => __awaiter(void 0, void 0, void 0, function* () {
     const foundOrders = yield Order_1.default.find({ customerEmail: customerEmail });
     if (!foundOrders) {
@@ -35,6 +38,7 @@ const deleteOrderById = (orderId) => __awaiter(void 0, void 0, void 0, function*
     yield Order_1.default.findByIdAndDelete(orderId);
 });
 exports.default = {
+    getAllOrders,
     createOrder,
     findOrdersByEmail,
     findOrderById,

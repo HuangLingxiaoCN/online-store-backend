@@ -1,6 +1,7 @@
 import express from 'express'
 
 import {
+  getAllOrders,
   findOrdersByCustomerEmail,
   createOrder,
   deleteOrder,
@@ -9,6 +10,7 @@ import {
 const router = express.Router()
 
 router.post('/createOrder', createOrder)
+router.get('/getOrders', getAllOrders)
 router.get('/getOrders/:customerEmail', findOrdersByCustomerEmail)
 router.delete('/deleteOrder', deleteOrder)
 

@@ -6,7 +6,25 @@ import User from '../models/User'
 import UserService from '../services/user'
 import { BadRequestError, NotFoundError } from '../helpers/apiError'
 
-// Get all orders with the same customer email (same buyer)
+// Get all orders
+export const getAllOrders = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const allOrders = await OrderService.getAllOrders()
+    response.send(allOrders)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// Get orders by the customer email (same buyer)
 export const findOrdersByCustomerEmail = async (
   request: Request,
   response: Response,
@@ -77,6 +95,7 @@ export const createOrder = async (
   }
 }
 
+// Delete an order
 export const deleteOrder = async (
   request: Request,
   response: Response,

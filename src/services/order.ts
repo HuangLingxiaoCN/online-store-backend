@@ -5,6 +5,10 @@ const createOrder = async (order: OrderType) => {
   return order.save()
 }
 
+const getAllOrders = async (): Promise<OrderType[]> => {
+  return Order.find()
+}
+
 const findOrdersByEmail = async (customerEmail: string) => {
   const foundOrders = await Order.find({ customerEmail: customerEmail })
 
@@ -30,6 +34,7 @@ const deleteOrderById = async (orderId: string) => {
 }
 
 export default {
+  getAllOrders,
   createOrder,
   findOrdersByEmail,
   findOrderById,

@@ -12,13 +12,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrder = exports.createOrder = exports.findOrdersByCustomerEmail = void 0;
+exports.deleteOrder = exports.createOrder = exports.findOrdersByCustomerEmail = exports.getAllOrders = void 0;
 const Order_1 = __importDefault(require("../models/Order"));
 const order_1 = __importDefault(require("../services/order"));
 const User_1 = __importDefault(require("../models/User"));
 const user_1 = __importDefault(require("../services/user"));
 const apiError_1 = require("../helpers/apiError");
-// Get all orders with the same customer email (same buyer)
+// Get all orders
+exports.getAllOrders = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const allOrders = yield order_1.default.getAllOrders();
+        response.send(allOrders);
+    }
+    catch (error) {
+        if (error instanceof Error && error.name == 'ValidationError') {
+            next(new apiError_1.BadRequestError('Invalid Request', error));
+        }
+        else {
+            next(error);
+        }
+    }
+});
+// Get orders by the customer email (same buyer)
 exports.findOrdersByCustomerEmail = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { customerEmail } = request.params;
@@ -69,6 +84,7 @@ exports.createOrder = (request, response, next) => __awaiter(void 0, void 0, voi
         }
     }
 });
+// Delete an order
 exports.deleteOrder = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { orderId } = request.body;
