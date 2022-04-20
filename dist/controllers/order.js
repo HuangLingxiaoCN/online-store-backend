@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrder = exports.createOrder = exports.findOrdersByCustomerEmail = exports.getAllOrders = void 0;
+exports.deleteOrder = exports.createOrder = exports.findOrdersByCustomerEmail = exports.getOneOrder = exports.getAllOrders = void 0;
 const Order_1 = __importDefault(require("../models/Order"));
 const order_1 = __importDefault(require("../services/order"));
 const User_1 = __importDefault(require("../models/User"));
@@ -23,6 +23,21 @@ exports.getAllOrders = (request, response, next) => __awaiter(void 0, void 0, vo
     try {
         const allOrders = yield order_1.default.getAllOrders();
         response.send(allOrders);
+    }
+    catch (error) {
+        if (error instanceof Error && error.name == 'ValidationError') {
+            next(new apiError_1.BadRequestError('Invalid Request', error));
+        }
+        else {
+            next(error);
+        }
+    }
+});
+// Get one order by id
+exports.getOneOrder = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const order = yield order_1.default.getOneOrder(request.params.orderId);
+        response.send(order);
     }
     catch (error) {
         if (error instanceof Error && error.name == 'ValidationError') {

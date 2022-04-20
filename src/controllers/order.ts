@@ -24,6 +24,24 @@ export const getAllOrders = async (
   }
 }
 
+// Get one order by id
+export const getOneOrder = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const order = await OrderService.getOneOrder(request.params.orderId)
+    response.send(order)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
 // Get orders by the customer email (same buyer)
 export const findOrdersByCustomerEmail = async (
   request: Request,

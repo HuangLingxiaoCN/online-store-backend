@@ -20,6 +20,13 @@ const createOrder = (order) => __awaiter(void 0, void 0, void 0, function* () {
 const getAllOrders = () => __awaiter(void 0, void 0, void 0, function* () {
     return Order_1.default.find();
 });
+const getOneOrder = (orderId) => __awaiter(void 0, void 0, void 0, function* () {
+    const foundOrder = yield Order_1.default.findById(orderId);
+    if (!foundOrder) {
+        throw new apiError_1.NotFoundError('The order ' + orderId + ' does not exist');
+    }
+    return foundOrder;
+});
 const findOrdersByEmail = (customerEmail) => __awaiter(void 0, void 0, void 0, function* () {
     const foundOrders = yield Order_1.default.find({ customerEmail: customerEmail });
     if (!foundOrders) {
@@ -39,6 +46,7 @@ const deleteOrderById = (orderId) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.default = {
     getAllOrders,
+    getOneOrder,
     createOrder,
     findOrdersByEmail,
     findOrderById,

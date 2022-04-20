@@ -9,6 +9,16 @@ const getAllOrders = async (): Promise<OrderType[]> => {
   return Order.find()
 }
 
+const getOneOrder = async (orderId: string): Promise<OrderType> => {
+  const foundOrder = await Order.findById(orderId)
+
+  if (!foundOrder) {
+    throw new NotFoundError('The order ' + orderId + ' does not exist')
+  }
+
+  return foundOrder
+}
+
 const findOrdersByEmail = async (customerEmail: string) => {
   const foundOrders = await Order.find({ customerEmail: customerEmail })
 
@@ -35,6 +45,7 @@ const deleteOrderById = async (orderId: string) => {
 
 export default {
   getAllOrders,
+  getOneOrder,
   createOrder,
   findOrdersByEmail,
   findOrderById,

@@ -2,6 +2,7 @@ import express from 'express'
 
 import {
   getAllOrders,
+  getOneOrder,
   findOrdersByCustomerEmail,
   createOrder,
   deleteOrder,
@@ -11,6 +12,7 @@ const router = express.Router()
 
 router.post('/createOrder', createOrder)
 router.get('/getOrders', getAllOrders)
+router.get('/getOrder/:orderId', getOneOrder)
 router.get('/getOrders/:customerEmail', findOrdersByCustomerEmail)
 router.delete('/deleteOrder', deleteOrder)
 
