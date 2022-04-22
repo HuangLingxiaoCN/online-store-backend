@@ -114,11 +114,6 @@ export const registerUser = async (
           })
       })
       .catch((err) => console.log(err))
-
-    // res
-    //   .header('x-auth-token', token)
-    //   .status(201)
-    //   .send(_.pick(user, ['name', 'email', '_id']))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
