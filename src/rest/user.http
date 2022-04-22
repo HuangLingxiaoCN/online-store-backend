@@ -1,16 +1,20 @@
 // Get all users
 GET http://localhost:3000/api/user
 
-
+// register new user
 ###
 POST http://localhost:3000/api/user
 content-type: application/json
 
 {
-  "name": "Lisa",
-  "email": "Lisa@gmail.com",
-  "password": "Lisapassword"
+  "name": "Alice",
+  "email": "cudrisalmu@vusra.com",
+  "password": "Alicepassword"
 }
+
+// Confirm user email
+###
+GET http://localhost:3000/api/user/confirm/61e4b7f2f187b721109e202f
 
 ###
 GET http://localhost:3000/api/user/me

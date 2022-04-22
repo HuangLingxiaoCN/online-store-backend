@@ -60,6 +60,10 @@ const userSchema = new mongoose_1.default.Schema({
         type: Boolean,
         default: false,
     },
+    confirmed: {
+        type: Boolean,
+        default: false,
+    },
 });
 userSchema.methods.generateAuthToken = function () {
     const token = jwt.sign({ _id: this._id }, jwtKey);

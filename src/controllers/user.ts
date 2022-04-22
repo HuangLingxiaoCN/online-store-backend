@@ -8,13 +8,17 @@ import User from '../models/User'
 import UserService from '../services/user'
 import ProductService from '../services/product'
 import CartItem from '../models/CartItem'
-import Product, { ProductType } from '../models/Product'
-import { CartItemType } from '../models/CartItem'
+import Product from '../models/Product'
 import {
   BadRequestError,
   NotFoundError,
   ForbiddenError,
 } from '../helpers/apiError'
+
+// email verification
+import sendEmail from '../email/email.send'
+import templates from '../email/email.templates'
+import msgs from '../email/email.msgs'
 
 dotenv.config()
 const jwtKey: any = process.env.JWT_SECRET
@@ -97,10 +101,48 @@ export const registerUser = async (
 
     await UserService.saveUser(user)
     const token = jwt.sign({ _id: user._id }, jwtKey)
-    res
-      .header('x-auth-token', token)
-      .status(201)
-      .send(_.pick(user, ['name', 'email', '_id']))
+
+    // Send the new user a confirmation email
+    sendEmail(user.email, templates.confirm(user._id))
+      .then(() => {
+        res
+          .header('x-auth-token', token)
+          .status(201)
+          .json({
+            msg: msgs.confirm,
+            data: _.pick(user, ['name', 'email', '_id']),
+          })
+      })
+      .catch((err) => console.log(err))
+
+    // res
+    //   .header('x-auth-token', token)
+    //   .status(201)
+    //   .send(_.pick(user, ['name', 'email', '_id']))
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// Confirm user email
+export const confirmEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params
+
+    const user = await User.findById(id)
+    if (!user) throw new NotFoundError('The user does not exist.')
+
+    User.findByIdAndUpdate(id, { confirmed: true })
+      .then(() => res.json({ msg: msgs.confirmed }))
+      .catch((err) => console.log(err))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

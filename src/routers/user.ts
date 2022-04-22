@@ -4,6 +4,7 @@ import authorization from '../middlewares/authorization'
 import {
   getUser,
   registerUser,
+  confirmEmail,
   addCartItem,
   modifyCartItem,
   incrementCartItem,
@@ -23,6 +24,7 @@ const router = express.Router()
 
 router.get('/me', authorization, getUser)
 router.get('/', getAll)
+router.get('/confirm/:id', confirmEmail)
 router.post('/', registerUser)
 router.patch('/:userId', authorization, updateUser)
 router.delete('/:userId', authorization, deleteUser)

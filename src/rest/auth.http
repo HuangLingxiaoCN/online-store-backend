@@ -38,9 +38,10 @@ POST http://localhost:3000/api/auth
 content-type: application/json
 
 {
-  "email": "Lisa@gmail.com",
-  "password": "Lisapassword"
+  "email": "cudrisalmu@vusra.com",
+  "password": "Alicepassword"
 }
+
 
 // -------------------------------- is Admin ----------------------
 

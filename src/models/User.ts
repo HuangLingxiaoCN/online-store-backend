@@ -17,6 +17,9 @@ export type UserType = Document & {
   orders: Array<string>
   isAdmin: boolean
   isSuspended: boolean
+
+  // is confirmed ?
+  confirmed: boolean
 }
 
 const userSchema = new mongoose.Schema<UserType>({
@@ -47,6 +50,10 @@ const userSchema = new mongoose.Schema<UserType>({
     default: false,
   },
   isSuspended: {
+    type: Boolean,
+    default: false,
+  },
+  confirmed: {
     type: Boolean,
     default: false,
   },

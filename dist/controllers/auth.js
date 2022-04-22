@@ -37,6 +37,10 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const jwt = __importStar(require("jsonwebtoken"));
 const User_1 = __importDefault(require("../models/User"));
 const apiError_1 = require("../helpers/apiError");
+// Email verification
+const email_send_1 = __importDefault(require("../email/email.send"));
+const email_templates_1 = __importDefault(require("../email/email.templates"));
+const email_msgs_1 = __importDefault(require("../email/email.msgs"));
 dotenv_1.default.config();
 const jwtKey = process.env.JWT_SECRET;
 // POST
@@ -57,8 +61,14 @@ exports.authenticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0,
         if (user.isSuspended) {
             throw new apiError_1.ForbiddenError('Account suspended. Please contact the administrator');
         }
-        const token = jwt.sign({ _id: user._id }, jwtKey);
-        res.status(200).send(token);
+        // If the existing user's email is not confirmed, send a confirmation email
+        if (!user.confirmed) {
+            email_send_1.default(user.email, email_templates_1.default.confirm(user._id)).then(() => res.json({ msg: email_msgs_1.default.resend }));
+        }
+        else {
+            const token = jwt.sign({ _id: user._id }, jwtKey);
+            res.status(200).send(token);
+        }
     }
     catch (error) {
         if (error instanceof Error && error.name == 'ValidationError') {
