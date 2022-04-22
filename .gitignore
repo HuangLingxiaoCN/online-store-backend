@@ -39,3 +39,6 @@ Thumbs.db
 
 # Fake data
 src/data/
+
+# Rest API testing
+rest
