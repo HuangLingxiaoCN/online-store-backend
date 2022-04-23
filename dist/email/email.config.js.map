@@ -1,1 +1,1 @@
-{"version":3,"file":"email.config.js","sourceRoot":"","sources":["../../src/email/email.config.ts"],"names":[],"mappings":";;AAAA,MAAM,aAAa,GAAG,OAAO,CAAC,GAAG,CAAC,QAAQ,KAAK,YAAY;IACzD,CAAC,CAAC,OAAO,CAAC,GAAG,CAAC,aAAa;IAC3B,CAAC,CAAC,uBAAuB,CAAA;AAE3B,kBAAe,aAAa,CAAA"}
+{"version":3,"file":"email.config.js","sourceRoot":"","sources":["../../src/email/email.config.ts"],"names":[],"mappings":";;AAAA,MAAM,aAAa,GACjB,OAAO,CAAC,GAAG,CAAC,QAAQ,KAAK,YAAY;IACnC,CAAC,CAAC,OAAO,CAAC,GAAG,CAAC,aAAa;IAC3B,CAAC,CAAC,uBAAuB,CAAA;AAE7B,kBAAe,aAAa,CAAA"}

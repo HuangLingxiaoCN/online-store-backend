@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const email_config_1 = __importDefault(require("./email.config"));
 // This file is exporting an Object with a single key/value pair.
 // However, because this is not a part of the logic of the application
-// it makes sense to abstract it to another file. Plus, it is now easily 
+// it makes sense to abstract it to another file. Plus, it is now easily
 // extensible if the application needs to send different email templates
 // (eg. unsubscribe) in the future.
 exports.default = {
@@ -18,7 +18,7 @@ exports.default = {
         click to confirm email
       </a>
     `,
-        text: `Copy and paste this link: ${email_config_1.default}/confirm/${id}`
-    })
+        text: `Copy and paste this link: ${email_config_1.default}/confirm/${id}`,
+    }),
 };
 //# sourceMappingURL=email.templates.js.map
