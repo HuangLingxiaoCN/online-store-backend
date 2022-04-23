@@ -8,22 +8,22 @@ GET http://localhost:3000/api/user
 
 # {
 #   "name": "Alice",
-#   "email": "yorzokogno@vusra.com",
+#   "email": "tofyoyulmi@vusra.com",
 #   "password": "Alicepassword"
 # }
-# POST https://fierce-spring-store-backend.herokuapp.com/api/user
-# content-type: application/json
+POST https://fierce-spring-store-backend.herokuapp.com/api/user
+content-type: application/json
 
-# {
-#   "name": "Alice",
-#   "email": "darzusatri@vusra.com",
-#   "password": "Alicepassword"
-# }
+{
+  "name": "Alice",
+  "email": "tofyoyulmi@vusra.com",
+  "password": "Alicepassword"
+}
 
 
 // Confirm user email
 ###
-GET http://localhost:3000/api/user/confirm/6261c404f688fd00229cb0a7
+GET http://localhost:3000/api/user/confirm/6264667b4da89200227fb4e3
 
 ###
 GET http://localhost:3000/api/user/me

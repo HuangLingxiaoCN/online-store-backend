@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateListing = exports.removeListing = exports.addListing = exports.clearCartItems = exports.deleteCartItem = exports.decrementCartItem = exports.incrementCartItem = exports.modifyCartItem = exports.addCartItem = exports.ToggleUserSuspension = exports.deleteUser = exports.registerUser = exports.updateUser = exports.getAll = exports.getUser = void 0;
+exports.updateListing = exports.removeListing = exports.addListing = exports.clearCartItems = exports.deleteCartItem = exports.decrementCartItem = exports.incrementCartItem = exports.modifyCartItem = exports.addCartItem = exports.ToggleUserSuspension = exports.deleteUser = exports.confirmEmail = exports.registerUser = exports.updateUser = exports.getAll = exports.getUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const jwt = __importStar(require("jsonwebtoken"));
@@ -43,9 +43,9 @@ const CartItem_1 = __importDefault(require("../models/CartItem"));
 const Product_1 = __importDefault(require("../models/Product"));
 const apiError_1 = require("../helpers/apiError");
 // email verification
-// import sendEmail from '../email/email.send'
-// import templates from '../email/email.templates'
-// import msgs from '../email/email.msgs'
+const email_send_1 = __importDefault(require("../email/email.send"));
+const email_templates_1 = __importDefault(require("../email/email.templates"));
+const email_msgs_1 = __importDefault(require("../email/email.msgs"));
 dotenv_1.default.config();
 const jwtKey = process.env.JWT_SECRET;
 // ------------------------------------User Management -------------------------------------------------//
@@ -103,8 +103,15 @@ exports.registerUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     try {
         const { name, email, password } = req.body;
         let user = yield User_1.default.findOne({ email: email });
-        if (user)
-            throw new apiError_1.BadRequestError('The user has already registered.');
+        if (user) {
+            // The user is already registered but not confirmed yet
+            if (!user.confirmed) {
+                email_send_1.default(user.email, email_templates_1.default.confirm(user._id)).then(() => res.json({ msg: email_msgs_1.default.resend }));
+            }
+            else {
+                throw new apiError_1.BadRequestError('The user has already registered and was confirmed.');
+            }
+        }
         user = new User_1.default({ name, email, password });
         // bcrypt
         const salt = yield bcrypt_1.default.genSalt(10);
@@ -114,21 +121,21 @@ exports.registerUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         // Send the new user a confirmation email
         // !!! Only working locally !!!
         // !!! Not working on Heroku !!!
-        // sendEmail(user.email, templates.confirm(user._id))
-        //   .then(() => {
-        //     res
-        //       .header('x-auth-token', token)
-        //       .status(201)
-        //       .json({
-        //         msg: msgs.confirm,
-        //         data: _.pick(user, ['name', 'email', '_id']),
-        //       })
-        //   })
-        //   .catch((err) => console.log(err))
-        res
-            .header('x-auth-token', token)
-            .status(201)
-            .send(lodash_1.default.pick(user, ['name', 'email', '_id']));
+        email_send_1.default(user.email, email_templates_1.default.confirm(user._id))
+            .then(() => {
+            res
+                .header('x-auth-token', token)
+                .status(201)
+                .json({
+                msg: email_msgs_1.default.confirm,
+                data: lodash_1.default.pick(user, ['name', 'email', '_id']),
+            });
+        })
+            .catch((err) => console.log(err));
+        // res
+        //   .header('x-auth-token', token)
+        //   .status(201)
+        //   .send(_.pick(user, ['name', 'email', '_id']))
     }
     catch (error) {
         if (error instanceof Error && error.name == 'ValidationError') {
@@ -140,26 +147,28 @@ exports.registerUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 // Confirm user email
-// export const confirmEmail = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const { id } = req.params
-//     const user = await User.findById(id)
-//     if (!user) throw new NotFoundError('The user does not exist.')
-//     User.findByIdAndUpdate(id, { confirmed: true })
-//       .then(() => res.json({ msg: msgs.confirmed }))
-//       .catch((err) => console.log(err))
-//   } catch (error) {
-//     if (error instanceof Error && error.name == 'ValidationError') {
-//       next(new BadRequestError('Invalid Request', error))
-//     } else {
-//       next(error)
-//     }
-//   }
-// }
+exports.confirmEmail = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const user = yield User_1.default.findById(id);
+        if (!user)
+            throw new apiError_1.NotFoundError('The user does not exist.');
+        if (user.confirmed) {
+            res.json({ msg: email_msgs_1.default.alreadyConfirmed });
+        }
+        User_1.default.findByIdAndUpdate(id, { confirmed: true })
+            .then(() => res.json({ msg: email_msgs_1.default.confirmed }))
+            .catch((err) => console.log(err));
+    }
+    catch (error) {
+        if (error instanceof Error && error.name == 'ValidationError') {
+            next(new apiError_1.BadRequestError('Invalid Request', error));
+        }
+        else {
+            next(error);
+        }
+    }
+});
 // Delete user
 exports.deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {

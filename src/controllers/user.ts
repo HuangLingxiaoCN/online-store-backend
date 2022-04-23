@@ -16,9 +16,9 @@ import {
 } from '../helpers/apiError'
 
 // email verification
-// import sendEmail from '../email/email.send'
-// import templates from '../email/email.templates'
-// import msgs from '../email/email.msgs'
+import sendEmail from '../email/email.send'
+import templates from '../email/email.templates'
+import msgs from '../email/email.msgs'
 
 dotenv.config()
 const jwtKey: any = process.env.JWT_SECRET
@@ -92,7 +92,18 @@ export const registerUser = async (
   try {
     const { name, email, password } = req.body
     let user = await User.findOne({ email: email })
-    if (user) throw new BadRequestError('The user has already registered.')
+    if (user) {
+      // The user is already registered but not confirmed yet
+      if (!user.confirmed) {
+        sendEmail(user.email, templates.confirm(user._id)).then(() =>
+          res.json({ msg: msgs.resend })
+        )
+      } else {
+        throw new BadRequestError(
+          'The user has already registered and was confirmed.'
+        )
+      }
+    }
 
     user = new User({ name, email, password })
     // bcrypt
@@ -106,22 +117,22 @@ export const registerUser = async (
     // !!! Only working locally !!!
     // !!! Not working on Heroku !!!
 
-    // sendEmail(user.email, templates.confirm(user._id))
-    //   .then(() => {
-    //     res
-    //       .header('x-auth-token', token)
-    //       .status(201)
-    //       .json({
-    //         msg: msgs.confirm,
-    //         data: _.pick(user, ['name', 'email', '_id']),
-    //       })
-    //   })
-    //   .catch((err) => console.log(err))
+    sendEmail(user.email, templates.confirm(user._id))
+      .then(() => {
+        res
+          .header('x-auth-token', token)
+          .status(201)
+          .json({
+            msg: msgs.confirm,
+            data: _.pick(user, ['name', 'email', '_id']),
+          })
+      })
+      .catch((err) => console.log(err))
 
-    res
-      .header('x-auth-token', token)
-      .status(201)
-      .send(_.pick(user, ['name', 'email', '_id']))
+    // res
+    //   .header('x-auth-token', token)
+    //   .status(201)
+    //   .send(_.pick(user, ['name', 'email', '_id']))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
@@ -132,28 +143,32 @@ export const registerUser = async (
 }
 
 // Confirm user email
-// export const confirmEmail = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const { id } = req.params
+export const confirmEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params
 
-//     const user = await User.findById(id)
-//     if (!user) throw new NotFoundError('The user does not exist.')
+    const user = await User.findById(id)
+    if (!user) throw new NotFoundError('The user does not exist.')
 
-//     User.findByIdAndUpdate(id, { confirmed: true })
-//       .then(() => res.json({ msg: msgs.confirmed }))
-//       .catch((err) => console.log(err))
-//   } catch (error) {
-//     if (error instanceof Error && error.name == 'ValidationError') {
-//       next(new BadRequestError('Invalid Request', error))
-//     } else {
-//       next(error)
-//     }
-//   }
-// }
+    if (user.confirmed) {
+      res.json({ msg: msgs.alreadyConfirmed })
+    }
+
+    User.findByIdAndUpdate(id, { confirmed: true })
+      .then(() => res.json({ msg: msgs.confirmed }))
+      .catch((err) => console.log(err))
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
 
 // Delete user
 export const deleteUser = async (

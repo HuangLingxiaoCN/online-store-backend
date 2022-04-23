@@ -9,7 +9,7 @@ const user_1 = require("../controllers/user");
 const router = express_1.default.Router();
 router.get('/me', authorization_1.default, user_1.getUser);
 router.get('/', user_1.getAll);
-// router.get('/confirm/:id', confirmEmail)
+router.get('/confirm/:id', user_1.confirmEmail);
 router.post('/', user_1.registerUser);
 router.patch('/:userId', authorization_1.default, user_1.updateUser);
 router.delete('/:userId', authorization_1.default, user_1.deleteUser);
