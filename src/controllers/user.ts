@@ -92,10 +92,7 @@ export const registerUser = async (
   try {
     const { name, email, password } = req.body
     let user = await User.findOne({ email: email })
-    if (user)
-      throw new BadRequestError(
-        'The user has already registered and was confirmed.'
-      )
+    if (user) throw new BadRequestError('The user has already registered.')
 
     user = new User({ name, email, password })
     // bcrypt

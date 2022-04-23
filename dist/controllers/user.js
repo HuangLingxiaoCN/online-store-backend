@@ -103,15 +103,8 @@ exports.registerUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     try {
         const { name, email, password } = req.body;
         let user = yield User_1.default.findOne({ email: email });
-        if (user) {
-            // The user is already registered but not confirmed yet
-            if (!user.confirmed) {
-                email_send_1.default(user.email, email_templates_1.default.confirm(user._id)).then(() => res.json({ msg: email_msgs_1.default.resend }));
-            }
-            else {
-                throw new apiError_1.BadRequestError('The user has already registered and was confirmed.');
-            }
-        }
+        if (user)
+            throw new apiError_1.BadRequestError('The user has already registered.');
         user = new User_1.default({ name, email, password });
         // bcrypt
         const salt = yield bcrypt_1.default.genSalt(10);
