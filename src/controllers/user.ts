@@ -35,7 +35,17 @@ export const getUser = async (
     //
     let user: any = req.user
     user = await UserService.getUser(user._id)
-    res.status(200).send(user)
+
+    if (!user) throw new NotFoundError('The user does not exist.')
+
+    // if the user email is not confirmed, resend a confirmation email
+    if (!user.confirmed) {
+      sendEmail(user.email, templates.confirm(user._id)).then(() =>
+        res.json({ msg: msgs.resend })
+      )
+    } else {
+      res.status(200).send(user)
+    }
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

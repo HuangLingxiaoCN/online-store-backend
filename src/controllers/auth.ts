@@ -48,17 +48,9 @@ export const authenticateUser = async (
         'Account suspended. Please contact the administrator'
       )
     }
+    const token = jwt.sign({ _id: user._id }, jwtKey)
 
-    // If the existing user's email is not confirmed, send a confirmation email
-    if (!user.confirmed) {
-      sendEmail(user.email, templates.confirm(user._id)).then(() =>
-        res.json({ msg: msgs.resend })
-      )
-    } else {
-      const token = jwt.sign({ _id: user._id }, jwtKey)
-
-      res.status(200).send(token)
-    }
+    res.status(200).send(token)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

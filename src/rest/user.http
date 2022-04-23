@@ -8,26 +8,27 @@ content-type: application/json
 
 {
   "name": "Alice",
-  "email": "tofyoyulmi@vusra.com",
+  "email": "pidracutre@vusra.com",
   "password": "Alicepassword"
 }
+
+###
 # POST https://fierce-spring-store-backend.herokuapp.com/api/user
 # content-type: application/json
 
 # {
-#   "name": "Alice",
-#   "email": "tofyoyulmi@vusra.com",
-#   "password": "Alicepassword"
+#   "name": "Tom",
+#   "email": "roydocartu@vusra.com",
+#   "password": "Tompassword"
 # }
-
 
 // Confirm user email
 ###
-GET http://localhost:3000/api/user/confirm/6264667b4da89200227fb4e3
+GET https://fierce-spring-store-backend.herokuapp.com/api/user/confirm/62646adac60bad002224914a
 
 ###
 GET http://localhost:3000/api/user/me
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWU0YjdmMmYxODdiNzIxMTA5ZTIwMmYiLCJpYXQiOjE2NDI5MDU1Mjd9.EQZERK7w9W57uX741ylpx1i5uAiVeSbTgEDjcaKOJI4
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjY0NzNjMjRiZDZlNTBiMjQ2MjkwMGQiLCJpYXQiOjE2NTA3NTA0MzV9.Xk0dk0wkd8fV3POwTMGVuwfseLeoSjlwkAgQ00Dco5I
 
 ###
 GET http://localhost:3000/api/user/me

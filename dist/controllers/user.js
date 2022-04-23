@@ -55,7 +55,15 @@ exports.getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         //
         let user = req.user;
         user = yield user_1.default.getUser(user._id);
-        res.status(200).send(user);
+        if (!user)
+            throw new apiError_1.NotFoundError('The user does not exist.');
+        // if the user email is not confirmed, resend a confirmation email
+        if (!user.confirmed) {
+            email_send_1.default(user.email, email_templates_1.default.confirm(user._id)).then(() => res.json({ msg: email_msgs_1.default.resend }));
+        }
+        else {
+            res.status(200).send(user);
+        }
     }
     catch (error) {
         if (error instanceof Error && error.name == 'ValidationError') {
