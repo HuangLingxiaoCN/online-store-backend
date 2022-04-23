@@ -92,18 +92,10 @@ export const registerUser = async (
   try {
     const { name, email, password } = req.body
     let user = await User.findOne({ email: email })
-    if (user) {
-      // The user is already registered but not confirmed yet
-      if (!user.confirmed) {
-        sendEmail(user.email, templates.confirm(user._id)).then(() =>
-          res.json({ msg: msgs.resend })
-        )
-      } else {
-        throw new BadRequestError(
-          'The user has already registered and was confirmed.'
-        )
-      }
-    }
+    if (user)
+      throw new BadRequestError(
+        'The user has already registered and was confirmed.'
+      )
 
     user = new User({ name, email, password })
     // bcrypt
