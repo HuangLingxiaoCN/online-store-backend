@@ -58,7 +58,8 @@ exports.authenticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0,
             throw new apiError_1.ForbiddenError('Account suspended. Please contact the administrator');
         }
         const token = jwt.sign({ _id: user._id }, jwtKey);
-        res.status(200).send(token);
+        // res.status(200).json({ token, email })
+        res.status(200).json(token);
     }
     catch (error) {
         if (error instanceof Error && error.name == 'ValidationError') {

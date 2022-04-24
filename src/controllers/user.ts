@@ -44,7 +44,7 @@ export const getUser = async (
       // )
 
       // if the user email is not confirmed
-      res.status(400).json({ msg: 'Email not confirmed' })
+      res.status(400).json({ msg: 'Email not confirmed', email: user.email })
     } else {
       res.status(200).send(user)
     }

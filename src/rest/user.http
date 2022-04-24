@@ -40,7 +40,7 @@ content-type: application/json
 
 ###
 GET http://localhost:3000/api/user/me
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjY1NDMwNjA2YzM5NzVlNTAyZTdlNzYiLCJpYXQiOjE2NTA4MDM0NjJ9.3hpnUzUE8fg9qgIX6AmDNvh68Dj60wztYZkEpNZ3HRw
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjY1NDg5OGVhMDM5MzAwMjIyNmM2MWQiLCJpYXQiOjE2NTA4MDU3MTV9.HnWZlXKRRJGUg_NCQVHj9NfxseMAVP58rFX4A7jH3Kg
 
 ###
 GET http://localhost:3000/api/user/me

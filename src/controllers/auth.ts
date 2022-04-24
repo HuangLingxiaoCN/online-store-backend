@@ -50,7 +50,7 @@ export const authenticateUser = async (
     }
     const token = jwt.sign({ _id: user._id }, jwtKey)
 
-    res.status(200).send(token)
+    res.status(200).json(token)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

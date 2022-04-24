@@ -11,7 +11,7 @@ POST http://localhost:3000/api/auth
 content-type: application/json
 
 {
-  "email": "folmokelte@vusra.com",
+  "email": "yulmajekka@vusra.com",
   "password": "test"
 }
 

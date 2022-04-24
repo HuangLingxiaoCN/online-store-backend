@@ -62,7 +62,7 @@ exports.getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
             //   res.json({ msg: msgs.resend })
             // )
             // if the user email is not confirmed
-            res.status(400).json({ msg: 'Email not confirmed' });
+            res.status(400).json({ msg: 'Email not confirmed', email: user.email });
         }
         else {
             res.status(200).send(user);
@@ -181,9 +181,7 @@ exports.resendEmail = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         // Send the new user a confirmation email
         email_send_1.default(user.email, email_templates_1.default.confirm(user._id))
             .then(() => {
-            res
-                .status(201)
-                .json({
+            res.status(201).json({
                 msg: email_msgs_1.default.resend,
                 data: lodash_1.default.pick(user, ['name', 'email', '_id']),
             });
