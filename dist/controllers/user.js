@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateListing = exports.removeListing = exports.addListing = exports.clearCartItems = exports.deleteCartItem = exports.decrementCartItem = exports.incrementCartItem = exports.modifyCartItem = exports.addCartItem = exports.ToggleUserSuspension = exports.deleteUser = exports.confirmEmail = exports.registerUser = exports.updateUser = exports.getAll = exports.getUser = void 0;
+exports.updateListing = exports.removeListing = exports.addListing = exports.clearCartItems = exports.deleteCartItem = exports.decrementCartItem = exports.incrementCartItem = exports.modifyCartItem = exports.addCartItem = exports.ToggleUserSuspension = exports.deleteUser = exports.resendEmail = exports.confirmEmail = exports.registerUser = exports.updateUser = exports.getAll = exports.getUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const jwt = __importStar(require("jsonwebtoken"));
@@ -57,9 +57,12 @@ exports.getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         user = yield user_1.default.getUser(user._id);
         if (!user)
             throw new apiError_1.NotFoundError('The user does not exist.');
-        // if the user email is not confirmed, resend a confirmation email
         if (!user.confirmed) {
-            email_send_1.default(user.email, email_templates_1.default.confirm(user._id)).then(() => res.json({ msg: email_msgs_1.default.resend }));
+            // sendEmail(user.email, templates.confirm(user._id)).then(() =>
+            //   res.json({ msg: msgs.resend })
+            // )
+            // if the user email is not confirmed
+            res.status(400).json({ msg: 'Email not confirmed' });
         }
         else {
             res.status(200).send(user);
@@ -120,8 +123,6 @@ exports.registerUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         yield user_1.default.saveUser(user);
         const token = jwt.sign({ _id: user._id }, jwtKey);
         // Send the new user a confirmation email
-        // !!! Only working locally !!!
-        // !!! Not working on Heroku !!!
         email_send_1.default(user.email, email_templates_1.default.confirm(user._id))
             .then(() => {
             res
@@ -159,6 +160,34 @@ exports.confirmEmail = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         }
         User_1.default.findByIdAndUpdate(id, { confirmed: true })
             .then(() => res.json({ msg: email_msgs_1.default.confirmed }))
+            .catch((err) => console.log(err));
+    }
+    catch (error) {
+        if (error instanceof Error && error.name == 'ValidationError') {
+            next(new apiError_1.BadRequestError('Invalid Request', error));
+        }
+        else {
+            next(error);
+        }
+    }
+});
+// Resend confirmation email
+exports.resendEmail = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { email } = req.body;
+        const user = yield User_1.default.findOne({ email: email });
+        if (!user)
+            throw new apiError_1.NotFoundError('The user does not exist');
+        // Send the new user a confirmation email
+        email_send_1.default(user.email, email_templates_1.default.confirm(user._id))
+            .then(() => {
+            res
+                .status(201)
+                .json({
+                msg: email_msgs_1.default.resend,
+                data: lodash_1.default.pick(user, ['name', 'email', '_id']),
+            });
+        })
             .catch((err) => console.log(err));
     }
     catch (error) {

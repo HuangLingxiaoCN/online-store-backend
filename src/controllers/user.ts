@@ -38,11 +38,13 @@ export const getUser = async (
 
     if (!user) throw new NotFoundError('The user does not exist.')
 
-    // if the user email is not confirmed, resend a confirmation email
     if (!user.confirmed) {
-      sendEmail(user.email, templates.confirm(user._id)).then(() =>
-        res.json({ msg: msgs.resend })
-      )
+      // sendEmail(user.email, templates.confirm(user._id)).then(() =>
+      //   res.json({ msg: msgs.resend })
+      // )
+
+      // if the user email is not confirmed
+      res.status(400).json({ msg: 'Email not confirmed' })
     } else {
       res.status(200).send(user)
     }
@@ -113,9 +115,6 @@ export const registerUser = async (
     const token = jwt.sign({ _id: user._id }, jwtKey)
 
     // Send the new user a confirmation email
-    // !!! Only working locally !!!
-    // !!! Not working on Heroku !!!
-
     sendEmail(user.email, templates.confirm(user._id))
       .then(() => {
         res
@@ -159,6 +158,36 @@ export const confirmEmail = async (
 
     User.findByIdAndUpdate(id, { confirmed: true })
       .then(() => res.json({ msg: msgs.confirmed }))
+      .catch((err) => console.log(err))
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// Resend confirmation email
+export const resendEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email } = req.body
+    const user = await User.findOne({ email: email })
+
+    if (!user) throw new NotFoundError('The user does not exist')
+
+    // Send the new user a confirmation email
+    sendEmail(user.email, templates.confirm(user._id))
+      .then(() => {
+        res.status(201).json({
+          msg: msgs.resend,
+          data: _.pick(user, ['name', 'email', '_id']),
+        })
+      })
       .catch((err) => console.log(err))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {

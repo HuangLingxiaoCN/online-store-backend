@@ -5,6 +5,7 @@ import {
   getUser,
   registerUser,
   confirmEmail,
+  resendEmail,
   addCartItem,
   modifyCartItem,
   incrementCartItem,
@@ -25,6 +26,7 @@ const router = express.Router()
 router.get('/me', authorization, getUser)
 router.get('/', getAll)
 router.get('/confirm/:id', confirmEmail)
+router.post('/reconfirm', resendEmail)
 router.post('/', registerUser)
 router.patch('/:userId', authorization, updateUser)
 router.delete('/:userId', authorization, deleteUser)

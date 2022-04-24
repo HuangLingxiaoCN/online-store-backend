@@ -7,9 +7,9 @@ POST http://localhost:3000/api/user
 content-type: application/json
 
 {
-  "name": "Alice",
-  "email": "pidracutre@vusra.com",
-  "password": "Alicepassword"
+  "name": "test",
+  "email": "folmokelte@vusra.com",
+  "password": "test"
 }
 
 ###
@@ -27,8 +27,20 @@ content-type: application/json
 GET https://fierce-spring-store-backend.herokuapp.com/api/user/confirm/62646adac60bad002224914a
 
 ###
+GET http://localhost:3000/api/user/confirm/6265430606c3975e502e7e76
+
+// Resend confirmation email
+###
+POST http://localhost:3000/api/user/reconfirm
+content-type: application/json
+
+{
+  "email": "folmokelte@vusra.com"
+}
+
+###
 GET http://localhost:3000/api/user/me
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjY0NzNjMjRiZDZlNTBiMjQ2MjkwMGQiLCJpYXQiOjE2NTA3NTA0MzV9.Xk0dk0wkd8fV3POwTMGVuwfseLeoSjlwkAgQ00Dco5I
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjY1NDMwNjA2YzM5NzVlNTAyZTdlNzYiLCJpYXQiOjE2NTA4MDM0NjJ9.3hpnUzUE8fg9qgIX6AmDNvh68Dj60wztYZkEpNZ3HRw
 
 ###
 GET http://localhost:3000/api/user/me
