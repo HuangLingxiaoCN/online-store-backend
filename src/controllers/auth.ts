@@ -11,11 +11,6 @@ import {
   NotFoundError,
 } from '../helpers/apiError'
 
-// Email verification
-import sendEmail from '../email/email.send'
-import templates from '../email/email.templates'
-import msgs from '../email/email.msgs'
-
 dotenv.config()
 const jwtKey: any = process.env.JWT_SECRET
 

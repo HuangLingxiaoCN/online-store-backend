@@ -104,7 +104,23 @@ export const deleteProduct = async (
       throw new NotFoundError('The product does not exist')
     }
 
-    res.status(200).json(foundProduct)
+    // Also delete the listing in user listings
+    const user = await User.findOne({ email: foundProduct.ownerEmail })
+    if (!user) throw new NotFoundError('The user does not exit.')
+
+    const deletedListing = user.listings.find(
+      (l) => l._id.toString() === foundProduct._id.toString()
+    )
+    if (!deletedListing)
+      throw new NotFoundError('The listing does not exist on this user.')
+    const idx = user.listings.indexOf(deletedListing)
+    user.listings.splice(idx, 1)
+
+    await UserService.handleListing(user)
+
+    res
+      .status(200)
+      .json({ msg: 'Successfully deleted!', deletedProduct: foundProduct })
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
