@@ -7,18 +7,15 @@ import {
   confirmEmail,
   resendEmail,
   addCartItem,
-  modifyCartItem,
-  incrementCartItem,
-  decrementCartItem,
+  modifyCartItemQuantity,
   deleteCartItem,
   clearCartItems,
   addListing,
   removeListing,
-  updateListing,
   getAll,
   updateUser,
   deleteUser,
-  ToggleUserSuspension,
+  toggleUserSuspension,
 } from '../controllers/user'
 
 const router = express.Router()
@@ -30,17 +27,14 @@ router.post('/reconfirm', resendEmail)
 router.post('/', registerUser)
 router.patch('/:userId', authorization, updateUser)
 router.delete('/:userId', authorization, deleteUser)
-router.post('/suspend', authorization, ToggleUserSuspension)
+router.post('/suspend', authorization, toggleUserSuspension)
 
 router.patch('/cart/add', authorization, addCartItem)
-router.patch('/cart/modify', modifyCartItem)
-router.patch('/cart/increment', incrementCartItem)
-router.patch('/cart/decrement', decrementCartItem)
+router.patch('/cart/modify', modifyCartItemQuantity)
 router.patch('/cart/delete', deleteCartItem)
 router.patch('/cart/clear', clearCartItems)
 
 router.patch('/listing/add', authorization, addListing)
 router.delete('/listing/delete', authorization, removeListing)
-router.patch('/listing/update', authorization, updateListing)
 
 export default router

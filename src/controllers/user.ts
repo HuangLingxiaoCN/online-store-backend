@@ -39,11 +39,6 @@ export const getUser = async (
     if (!user) throw new NotFoundError('The user does not exist.')
 
     if (!user.confirmed) {
-      // sendEmail(user.email, templates.confirm(user._id)).then(() =>
-      //   res.json({ msg: msgs.resend })
-      // )
-
-      // if the user email is not confirmed
       res.status(400).json({ msg: 'Email not confirmed', email: user.email })
     } else {
       res.status(200).send(user)
@@ -126,11 +121,6 @@ export const registerUser = async (
           })
       })
       .catch((err) => console.log(err))
-
-    // res
-    //   .header('x-auth-token', token)
-    //   .status(201)
-    //   .send(_.pick(user, ['name', 'email', '_id']))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
@@ -218,7 +208,7 @@ export const deleteUser = async (
 }
 
 // Toggle suspension of user account
-export const ToggleUserSuspension = async (
+export const toggleUserSuspension = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -301,7 +291,7 @@ export const addCartItem = async (
 }
 
 // Modify one cart item's quantity
-export const modifyCartItem = async (
+export const modifyCartItemQuantity = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -324,62 +314,6 @@ export const modifyCartItem = async (
     cartItem.quantity = quantity
     cartItem.price = quantity * product.price
 
-    await UserService.handleCartItem(user)
-    res.send(cartItem)
-  } catch (error) {
-    if (error instanceof Error && error.name == 'ValidationError') {
-      next(new BadRequestError('Invalid Request', error))
-    } else {
-      next(error)
-    }
-  }
-}
-
-// PATCH Increment cart item
-export const incrementCartItem = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { email, itemId } = req.body
-    const user = await User.findOne({ email: email })
-    if (!user) throw new NotFoundError('The user does not exit.')
-
-    const cartItem = user.cart.find((item) => item._id.toString() === itemId)
-    if (!cartItem) throw new NotFoundError('The cart item does not exist.')
-
-    const singlePrice = cartItem.price / cartItem.quantity
-    cartItem.quantity++
-    cartItem.price = cartItem.quantity * singlePrice
-    await UserService.handleCartItem(user)
-    res.send(cartItem)
-  } catch (error) {
-    if (error instanceof Error && error.name == 'ValidationError') {
-      next(new BadRequestError('Invalid Request', error))
-    } else {
-      next(error)
-    }
-  }
-}
-
-// PATCH Decrement cart item
-export const decrementCartItem = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { email, itemId } = req.body
-    const user = await User.findOne({ email: email })
-    if (!user) throw new NotFoundError('The user does not exit.')
-
-    const cartItem = user.cart.find((item) => item._id.toString() === itemId)
-    if (!cartItem) throw new NotFoundError('The cart item does not exist.')
-
-    const singlePrice = cartItem.price / cartItem.quantity
-    cartItem.quantity--
-    cartItem.price = cartItem.quantity * singlePrice
     await UserService.handleCartItem(user)
     res.send(cartItem)
   } catch (error) {
@@ -511,47 +445,6 @@ export const removeListing = async (
     await UserService.handleListing(user)
     await ProductService.deleteProduct(productId)
     res.send(deletedListing)
-  } catch (error) {
-    if (error instanceof Error && error.name == 'ValidationError') {
-      next(new BadRequestError('Invalid Request', error))
-    } else {
-      next(error)
-    }
-  }
-}
-
-// UPDATE a listing
-export const updateListing = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { productId, update, email } = req.body
-    const product = await ProductService.findById(productId)
-    if (!product) throw new NotFoundError('Product not found')
-
-    const user = await User.findOne({ email: email })
-    if (!user) throw new NotFoundError('The user does not exit.')
-
-    const updatedListing = user.listings.find(
-      (l) => l._id.toString() === productId
-    )
-    if (!updatedListing)
-      throw new NotFoundError('the updatedListing does not exit.')
-    const idx = user.listings.indexOf(updatedListing)
-
-    // create a copy of updated listing and update value
-    const newListing: any = _.merge(user.listings[idx], update)
-    console.log(newListing)
-
-    // Replace the old listing with new listing
-    // user.listings.splice(idx, 1, newListing)
-    user.listings[idx] = newListing
-
-    await UserService.handleListing(user)
-    await ProductService.update(productId, update)
-    res.send(newListing)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
