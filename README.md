@@ -44,6 +44,8 @@ API endpoint: https://fierce-spring-store-backend.herokuapp.com
 | :-------- | :------- | :-------------------------------- |
 | `email`, `password`      | `JSON object` | **Required**. User credentials |
 
+#### New User Registration
+
 ```
   POST /api/user
 ```
