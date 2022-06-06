@@ -1,11 +1,55 @@
-# Backend for Fullstack-Online-Store Project
 
-### API endpoint: https://fierce-spring-store-backend.herokuapp.com
-### route: 1. /api/user 2. /api/products 3. /api/user/cart/add,increment,delete
-### 4. /api/user/listing/add, update, delete 5. /api/auth
-example: https://fierce-spring-store-backend.herokuapp.com/api/user <br /> https://fierce-spring-store-backend.herokuapp.com/api/products
+# Online Store Backend
 
-### A backend project that manages customers and their products with REST api and store the data in mongoDB Atlas. It is hosted on Heroku
+This is one part of my online store project which is developed for my thesis in university. The project
+can be used to buy and sell products for users.
 
-### The tech stacks in this project include: Express.js for REST api, mongoose for mongoDB, dotenv for environment variables configuration, bcrypt for password encryption, jwt(json web token) for authentication and authorization and Lodash for manipulating JavaScript array and object.
+## General Info
+
+This project is built as a backend to provide REST APIs and store project data in database for the frontend client application.
+
+
+
+## Tech Stack
+
+- TypeScript
+- Node
+- Express
+- MongoDB Atlas
+- JWT (Jason Web Token)
+- Nodemailer
+
+
+## API Reference
+API endpoint: https://fierce-spring-store-backend.herokuapp.com
+#### Get all users
+
+```http
+  GET /api/user
+```
+
+#### Get all products
+
+```http
+  GET /api/products
+```
+
+#### Authentication
+
+```http
+  GET /api/auth
+```
+
+| body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `email`, `password`      | `JSON object` | **Required**. User credentials |
+
+```http
+  POST /api/user
+```
+
+| body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name`, `email`, `password`      | `JSON object` | **Required**. User information |
+
 
