@@ -24,19 +24,19 @@ This project is built as a backend to provide REST APIs and store project data i
 API endpoint: https://fierce-spring-store-backend.herokuapp.com
 #### Get all users
 
-```http
+```
   GET /api/user
 ```
 
 #### Get all products
 
-```http
+```
   GET /api/products
 ```
 
 #### Authentication
 
-```http
+```
   GET /api/auth
 ```
 
@@ -44,7 +44,7 @@ API endpoint: https://fierce-spring-store-backend.herokuapp.com
 | :-------- | :------- | :-------------------------------- |
 | `email`, `password`      | `JSON object` | **Required**. User credentials |
 
-```http
+```
   POST /api/user
 ```
 
