@@ -22,6 +22,7 @@ This project is built as a backend to provide REST APIs and store project data i
 
 ## API Reference
 API endpoint: https://fierce-spring-store-backend.herokuapp.com
+
 #### Get all users
 
 ```
